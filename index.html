@@ -49,6 +49,10 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(34px,6vw,58px);line-
 .lede{margin-top:26px;max-width:600px;font-size:16.5px;color:#dfe9e2}
 .tally{margin-top:40px;font-family:var(--serif);font-size:18px;color:#fff;border-top:1px solid rgba(255,255,255,.28);display:inline-block;padding-top:16px}
 .tally b{font-weight:900;font-size:24px;padding:0 2px}
+.tally-item+.tally-item{margin-left:20px}
+.pending-badge{display:inline-block;margin-left:9px;padding:2px 8px;border:1px solid #b9c6bf;border-radius:999px;font-family:var(--sans);font-size:11.5px;font-weight:600;color:#6c7a73;background:#f2f4f2;vertical-align:middle;white-space:nowrap}
+.entry.pending .entry-title{color:#6c7a73}
+.entry.pending .udl-dots{opacity:.45}
 
 /* 필터 */
 .filters{position:sticky;top:0;z-index:20;background:var(--baekja);border-bottom:1px solid var(--line)}
@@ -134,7 +138,8 @@ footer p+p{margin-top:8px}
     <p class="lede">AI·에듀테크를 지렛대로 학습 장벽을 제거하는 보편적 학습설계(UDL) 수업의 교수·학습과정안과 수업 도구를 기록합니다.</p>
     <p class="tally">
       <span class="tally-item"><b>31</b><span>참여 교사</span></span>
-      <span class="tally-item"><b id="t-lessons">0</b><span>공개 과정안</span></span>
+      <span class="tally-item"><b id="t-lessons">0</b><span>등록 수업</span></span>
+      <span class="tally-item"><b id="t-published">0</b><span>지도안 공개</span></span>
       <span class="tally-item"><b id="t-subjects">0</b><span>교과</span></span>
     </p>
   </div>
@@ -216,23 +221,37 @@ footer p+p{margin-top:8px}
    수업 추가: LESSONS 배열에 한 덩어리를 복사해 붙이고 내용만 수정.
    link가 ""이면 자료 링크 줄이 숨겨집니다.
    =============================================================== */
-const LESSONS = [
- {grade:"6학년",subject:"미술",topic:"도자기의 변천 이해와 이름 추론",tools:"ZapWorks AR · NotebookLM · 자체 퀴즈 웹앱",udl:["표상","표현","참여"],goal:"소수: 도자기 그림을 보고 청자·분청사기·백자로 분류할 수 있다",support:"관찰 기록자 역할, 색·모양 단서 카드, 포인팅·화면 터치 응답 인정",link:"docs/6학년_도자기.pdf"},
- {grade:"6학년",subject:"국어",topic:"관용 표현을 이해하고 실생활에 활용하기",tools:"Suno AI · 띵커벨 보드 · 관용표현 웹앱",udl:["표상","표현","참여"],goal:"소수: 보조 학습지에서 관용 표현을 찾고 예시문을 골라 편지에 옮겨 쓰기",support:"보조 학습지·편지 예시문, 실물화상기 발표·교사 대독, 초성 힌트로 출제 참여",link:"docs/6학년_관용표현.pdf"},
- {grade:"5학년",subject:"실과",topic:"생활 공간 관리와 올바른 분리배출",tools:"생성형 AI 이미지 · Padlet · 분리배출 게임",udl:["표상","표현","참여"],goal:"소수: 공간 관리의 이유를 말이나 그림으로 표현하고 쓰레기를 알맞게 분리할 수 있다",support:"또래 도우미, 말하기·그림 카드·포인팅 허용, 실물 카드 1:1 매칭 관찰 평가",link:"docs/5학년_생활공간.pdf"},
- {grade:"5학년",subject:"국어",topic:"구조에 맞게 설명하는 글 쓰기",tools:"강원 아이로(AI 글쓰기 피드백) · 띵커벨",udl:["표상","표현","참여"],goal:"소수: 도움 활동지로 설명하는 글을 완성하고 피드백을 받아 고쳐 쓸 수 있다",support:"구조별 어휘 도움 활동지, 교사 개별 미니 수업, 쓰기·말하기 대체 인정",link:"docs/5학년_구조에맞게설명하는글쓰기.pdf"},
- {grade:"5학년",subject:"사회",topic:"인권의 의미와 헌법 속 인권 보장",tools:"카훗 · 띵커벨 보드",udl:["표상","표현","참여"],goal:"소수: 인권 보장 그림을 보고 헌법 속 사례와 알맞게 짝짓기",support:"단문 질문·선제적 힌트, 픽토그램 카드 분류 대안평가",link:"docs/5학년_인권의의미와헌법.pdf"},
- {grade:"4학년",subject:"영어",topic:"물건의 주인을 묻고 답하는 글 읽고 이해하기",tools:"AI 음성 읽기 · QR 음원 · ChatGPT · BOOKCREATOR",udl:["표상","표현","참여"],goal:"소수: 그림과 낱말 단서로 물건과 주인을 구별하고 책 만들기에 참여할 수 있다",support:"시각 단서 병행, 그림 선택·낱말 따라쓰기·문장 틀 완성, 수행 관찰 대안평가",link:""},
- {grade:"4학년",subject:"미술",topic:"내 그림을 활용한 감상 활동 참여하기",tools:"띵커벨 보드 · 워드클라우드",udl:["표상","표현","참여"],goal:"소수: 교사 안내로 공동체 작품에 참여하고 느낌 카드·하트로 감상 표현하기",support:"단어 말풍선·느낌 카드·스티커 표현, 또래 도우미 옆자리 배치",link:"docs/4학년_감상활동.pdf"},
- {grade:"4학년",subject:"수학",topic:"평면도형을 돌렸을 때의 변화 알아보기",tools:"Mathigon Polypad · 띵커벨",udl:["표상","표현","참여"],goal:"소수: 돌리기 교구로 기준점 위치 변화를 보며 돌린 후의 모양 찾기",support:"기준점 스티커·투명격자 돌리기판, 포인팅·매칭 표현 허용, 개별 미니 수업",link:"docs/4학년_평면도형.pdf"},
- {grade:"4학년",subject:"창체",topic:"멸종위기 동물 보호하기",tools:"띵커벨 · 캔바",udl:["표상","표현","참여"],goal:"소수: 멸종위기 동물 사진과 돕는 행동 사진을 알맞게 짝짓기",support:"검색 키워드 입력된 태블릿, 그림 단서 카드, 포인팅·카드 배치 인정",link:"docs/4학년_멸종위기동물.pdf"},
- {grade:"3학년",subject:"체육",topic:"이동하며 공 던지고 받기",tools:"Canva AI · 슬로모션 촬영 · 랜덤 짝 앱",udl:["표상","표현","참여"],goal:"소수: 가까운 거리와 큰 공으로 목표지점에 공을 전달하고 바운드로 던질 수 있다",support:"큰 공·짧은 반환점·바운드 패스 등 물리적 과제 조정, 우수 학생과 짝 구성",link:"docs/3학년_공던지고받기.pdf"},
- {grade:"3학년",subject:"사회",topic:"오래된 물건 탐색하고 가치 나누기",tools:"오디오 녹음 앱",udl:["표상","표현","참여"],goal:"소수: 아이콘 도움으로 물건을 탐색하고 ◯표·스티커·몸짓으로 소중함 표현하기",support:"아이콘·그림 단서 활동지, 과제 최소 단위 분절, 기호·녹음 표현 인정",link:"docs/3학년_오래된물건1.pdf"},
- {grade:"3학년",subject:"사회",topic:"오래된 물건 탐색하고 가치 나누기",tools:"오디오 녹음 앱",udl:["표상","표현","참여"],goal:"소수: 아이콘 도움으로 물건을 탐색하고 ◯표·스티커·몸짓으로 소중함 표현하기",support:"같은 주제를 학급 학습자 특성에 맞게 달리 설계하여 운영",link:"docs/3학년_오래된물건2.pdf"},
- {grade:"2학년",subject:"통합",topic:"짝과 함께하는 신체표현놀이 '손에 손잡고'",tools:"Active Arcade(Pose)",udl:["표상","표현","참여"],goal:"소수: 사람의 모습을 보고 어떤 자세인지 살펴본 후 몸으로 따라 할 수 있다",support:"실제 사람 모습으로 동작 제시, 앱 미니 수업 후 짝 활동 합류",link:"docs/2학년_손에손잡고.pdf"},
- {grade:"2학년",subject:"통합",topic:"식중독을 예방하기 위한 방법 알아보기",tools:"띵커벨 · 동영상 자료",udl:["표상","표현","참여"],goal:"소수: 식중독 예방 방법 사진을 알맞은 내용과 연결하기",support:"쉬운 어휘 단계별 설명, 별도 그림자료, 반복학습 허용",link:"docs/2학년_식중독예방.pdf"},
- {grade:"1학년",subject:"수학",topic:"놀이를 통해 50까지의 수를 다양한 방법으로 표현하기",tools:"똑똑 수학탐험대",udl:["표상","표현","참여"],goal:"소수: 짝꿍과 협력해 순서 토큰에 따라 그림과 숫자 카드를 연결하기",support:"협력 짝꿍 매칭, 숫자쓰기 판·책상 푯말, 포인팅·카드 집기 대안평가",link:"docs/1학년_똑똑수학탐험대.pdf"},
- {grade:"1학년",subject:"통합",topic:"물놀이를 안전하게 하는 방법 알아보기",tools:"Suno · 그룩",udl:["표상","표현","참여"],goal:"소수: 물놀이를 안전하게 하는 방법을 선택할 수 있다",support:"그림 단서 학습지(그림-문장 선 잇기), 능숙한 친구와 함께 배치",link:"docs/1학년_물놀이.pdf"}
+const LESSONS = [ {grade:"6학년",subject:"미술",topic:"도자기의 변천 이해와 이름 추론",tools:"ZapWorks AR · NotebookLM · Flow · 자체 퀴즈 웹앱",udl:["표상","표현","참여"],goal:"소수: 도자기 그림을 보고 청자·분청사기·백자로 분류할 수 있다",support:"색·모양 관찰 단서 카드 제공, 말 대신 짝짓기·포인팅으로 이해 표현, 퀴즈 웹앱 조작 관찰로 평가",link:"docs/6학년_도자기.pdf"},
+ {grade:"6학년",subject:"국어",topic:"관용 표현을 이해하고 실생활에 활용하기",tools:"Suno AI · 띵커벨 보드",udl:["표상","표현","참여"],goal:"소수: 보조 학습지에서 알맞은 관용 표현을 찾고 예시문을 골라 편지에 옮겨 쓰기",support:"관용어·속담 보조 학습지와 편지 예시문 제공, 고르고 옮겨 쓰는 방식으로 참여",link:"docs/6학년_관용표현.pdf"},
+ {grade:"6학년",subject:"영어",topic:"환경 보호를 주제로 제안하는 표현 활용하기",tools:"캔바 · 패들렛",udl:["표상","표현","참여"],goal:"소수: 시각 자료와 보조 도구의 도움을 받아 낱말·어구 수준으로 캠페인 활동에 참여하기",support:"수준에 맞게 제작한 프레젠테이션 자료, 포스터 활동지, 그림 카드로 표현 부담 낮춤",link:"docs/6학년_환경보호제안.pdf"},
+ {grade:"5학년",subject:"실과",topic:"생활 공간 관리와 올바른 분리배출",tools:"AI 생성 이미지 · Padlet · 분리배출 게임 앱",udl:["표상","표현","참여"],goal:"소수: 공간을 깨끗하게 유지해야 하는 이유를 말이나 그림으로 표현하고 쓰레기를 알맞게 분리하기",support:"글쓰기 대신 말하기·그림 선택·포인팅 허용, 확대 그림과 음성 안내 자료 제공",link:"docs/5학년_생활공간.pdf"},
+ {grade:"5학년",subject:"국어",topic:"구조에 맞게 설명하는 글 쓰기",tools:"강원 아이로 · 띵커벨 보드",udl:["표상","표현","참여"],goal:"소수: 교사의 도움으로 글의 구조를 정하고 도움 활동지로 설명하는 글을 완성하기",support:"구조별 연결어가 제시된 도움 활동지 제공, 교사가 개별로 다가가는 미니 수업",link:"docs/5학년_구조에맞게설명하는글쓰기.pdf"},
+ {grade:"5학년",subject:"사회",topic:"인권의 의미와 헌법 속 인권 보장",tools:"카훗 · 띵커벨 보드",udl:["표상","표현","참여"],goal:"소수: 인권 보장 그림을 보고 헌법 속 인권 보장 사례와 알맞게 짝짓기",support:"줄글 서술을 그림 카드로 단일화, 퀴즈 중 교사가 개별 힌트를 주어 성공 경험 보장",link:"docs/5학년_인권의의미와헌법.pdf"},
+ {grade:"4학년",subject:"수학",topic:"평면도형을 돌렸을 때의 변화 알아보기",tools:"Mathigon Polypad · 띵커벨",udl:["표상","표현","참여"],goal:"소수: 돌리기 교구로 기준점의 위치 변화를 보며 돌린 후의 모양 찾기",support:"빨간색 기준점 스티커와 투명격자필름 돌리기판 제공, 그리기 대신 선택·매칭 표현 허용",link:"docs/4학년_평면도형.pdf"},
+ {grade:"4학년",subject:"미술",topic:"내 그림을 활용한 감상 활동 참여하기",tools:"띵커벨 보드 · 워드클라우드",udl:["표상","표현","참여"],goal:"소수: 교사 안내로 공동체 작품에 참여하고 느낌 카드나 하트로 감상 표현하기",support:"미리 준비한 단어 말풍선과 느낌 카드 제공, 단계별 시각 안내판으로 활동 순서 안내",link:"docs/4학년_감상활동.pdf"},
+ {grade:"4학년",subject:"창체",topic:"멸종위기 동물 보호하기",tools:"띵커벨 보드 · 캔바",udl:["표상","표현","참여"],goal:"소수: 멸종위기 동물 사진과 돕는 행동 사진을 알맞게 짝짓기",support:"상황을 단순화해 설명, 말이나 글 대신 포인팅과 카드 배치로 이해 표현",link:"docs/4학년_멸종위기동물.pdf"},
+ {grade:"4학년",subject:"국어",topic:"친구들 앞에서 자신 있게 발표하기",tools:"패들릿 · AI 이미지·영상 생성 · AAC 앱",udl:["표상","표현","참여"],goal:"소수: 교사의 도움을 받아 정해진 내용과 주제를 찾아 원하는 방법으로 표현하기",support:"AAC·그림·생각그물·몸짓 등 발표 형식 제한 없음, 교사가 발표 내용을 함께 구성하는 미니 수업",link:"docs/4학년_발표하기.pdf"},
+ {grade:"4학년",subject:"영어",topic:"물건의 주인을 묻고 답하는 글 읽고 이해하기",tools:"AI 음성 읽기 · QR 음원 · ChatGPT · BOOKCREATOR",udl:["표상","표현","참여"],goal:"소수: 그림과 낱말 단서로 물건과 주인을 구별하고 교사의 도움으로 책 만들기에 참여하기",support:"글쓰기 대신 그림 선택·낱말 따라쓰기·문장 틀 완성으로 표현, 문장 조립 카드 제공",link:"docs/4학년_물건의주인.pdf"},
+ {grade:"3학년",subject:"사회",topic:"오래된 물건 탐색하고 가치 나누기 (2반)",tools:"오디오 녹음 앱 · 태블릿",udl:["표상","표현","참여"],goal:"소수: 아이콘의 도움으로 물건을 탐색하고 ◯표·스티커·몸짓으로 소중함 표현하기",support:"오감 아이콘 보물 진단서로 다감각 탐색, 기호·그림·녹음만으로도 인정하는 낮은 문턱의 표현 통로",link:"docs/3학년_오래된물건1.pdf"},
+ {grade:"3학년",subject:"사회",topic:"오래된 물건 탐색하고 가치 나누기 (3반)",tools:"오디오 녹음 앱 · 태블릿",udl:["표상","표현","참여"],goal:"소수: 아이콘의 도움으로 물건을 탐색하고 ◯표·스티커·몸짓으로 소중함 표현하기",support:"같은 주제를 학급 학습자 특성에 맞게 달리 설계, 교사의 개별 안내와 또래 도움으로 참여",link:"docs/3학년_오래된물건2.pdf"},
+ {grade:"3학년",subject:"체육",topic:"이동하며 공 던지고 받기",tools:"캔바 · 슬로모션 촬영 · 랜덤 짝 구성 앱",udl:["표상","표현","참여"],goal:"소수: 가까운 거리와 큰 공으로 목표지점에 공을 전달하고 바운드로 던지기",support:"소프트 발리볼과 폼 피구공 사용, 바운드 패스 구역과 바닥 표시선으로 과제 조정",link:"docs/3학년_공던지고받기.pdf"},
+ {grade:"2학년",subject:"수학",topic:"물건의 수를 여러 가지 곱셈식으로 나타내기",tools:"Gemini 이미지 생성 · Math Learning Center",udl:["표상","표현","참여"],goal:"소수: 구체물을 묶어보고 시각적 단서로 곱셈식의 기본 구조를 확인하기",support:"연결 블록으로 묶음을 직접 조작, 구체물 조작 과정을 반복 시범",link:"docs/2학년_곱셈.pdf"},
+ {grade:"2학년",subject:"통합",topic:"짝과 함께하는 신체표현놀이 '손에 손잡고'",tools:"Active Arcade(Pose)",udl:["표상","표현","참여"],goal:"소수: 사람의 모습을 보고 어떤 자세인지 살펴본 후 몸으로 따라 하기",support:"빈 공간 대신 실제 사람 모습으로 동작 제시, 앱 미니 수업 후 짝 활동에 합류",link:"docs/2학년_손에손잡고.pdf"},
+ {grade:"2학년",subject:"통합",topic:"식중독을 예방하기 위한 방법 알아보기",tools:"띵커벨",udl:["표상","표현","참여"],goal:"소수: 식중독 예방 방법을 낱자를 채워 완성하는 과제로 해결하기",support:"적절한 발문으로 자료 해석 지원, 에듀테크 조작 시 교사가 상시 도움",link:"docs/2학년_식중독예방.pdf"},
+ {grade:"2학년",subject:"국어",topic:"이야기를 읽고 생각이나 느낌 표현하기",tools:"TTS · 음성 녹음",udl:["표상","표현","참여"],goal:"",support:"반복 읽기로 읽기 유창성 지원, 녹음한 자신의 읽기를 들으며 속도와 억양 점검",link:"docs/2학년_작품감상.pdf"},
+ {grade:"1학년",subject:"수학",topic:"놀이를 통해 50까지의 수를 다양한 방법으로 표현하기",tools:"똑똑 수학탐험대",udl:["표상","표현","참여"],goal:"소수: 짝꿍과 협력해 시각적 순서 토큰에 따라 그림과 숫자 카드를 연결하기",support:"텍스트 대신 픽토그램과 시각적 타이머로 안내, 소수 학생용 숫자쓰기 판 제공",link:"docs/1학년_똑똑수학탐험대.pdf"},
+ {grade:"1학년",subject:"통합",topic:"물놀이를 안전하게 하는 방법 알아보기",tools:"Suno · 그룩 · 캡컷",udl:["표상","표현","참여"],goal:"소수: 물놀이를 안전하게 하는 방법을 선택할 수 있다",support:"그림 중심 수준별 학습지 제공, 능숙한 친구와 짝을 지어 도움을 받도록 배치",link:"docs/1학년_물놀이.pdf"},
+ {grade:"1학년",subject:"통합",topic:"새로운 동물이 나타난다면",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"준비중"},
+ {grade:"1학년",subject:"수학",topic:"규칙을 만들어 볼까요",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"준비중"},
+ {grade:"2학년",subject:"통합",topic:"나도 돕고 싶어요",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"준비중"},
+ {grade:"2학년",subject:"통합",topic:"발명왕이 되고 싶어요",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"준비중"},
+ {grade:"2학년",subject:"통합",topic:"어떤 어려움이 있을까요",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"준비중"},
+ {grade:"3학년",subject:"사회",topic:"옛날 사람들이 이용했던 교통수단 알아보기",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"준비중"},
+ {grade:"3학년",subject:"수학",topic:"분모가 같은 분수의 크기를 비교해 볼까요",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"준비중"},
+ {grade:"4학년",subject:"국어",topic:"의견과 이유가 드러나게 제안하는 글 쓰기",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"준비중"},
+ {grade:"5학년",subject:"사회",topic:"조선의 발전에 따른 사람들의 생활 모습 알아보기",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"준비중"},
+ {grade:"6학년",subject:"국어",topic:"고유어의 가치를 알고 활용하기",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"준비중"},
+ {grade:"6학년",subject:"수학",topic:"비의 성질 알아보기",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"준비중"}
 ];
 
 const TOOLS = [
@@ -255,6 +274,7 @@ function init(){
   const $sub=document.getElementById("f-subject");
   subjects.forEach(s=>{const o=document.createElement("option");o.textContent=s;$sub.appendChild(o);});
   document.getElementById("t-lessons").textContent=LESSONS.length;
+  document.getElementById("t-published").textContent=LESSONS.filter(l=>l.link&&l.link!=="준비중").length;
   document.getElementById("t-subjects").textContent=subjects.length;
   renderTools();render();
 }
@@ -279,22 +299,25 @@ function render(){
     group.innerHTML=`<div class="grade-col"><div class="num">${g[0]}</div><div class="lab">학년 · ${rows.length}건</div></div><div class="entries"></div>`;
     const $entries=group.querySelector(".entries");
     rows.forEach(l=>{
+      const pending=l.link==="준비중";
       const hasBody=l.goal||l.support||l.link;
-      const isPdf=l.link&&/\.pdf(\?|#|$)/i.test(l.link);
-      const e=document.createElement("div");e.className="entry";
+      const isPdf=!pending&&l.link&&/\.pdf(\?|#|$)/i.test(l.link);
+      const e=document.createElement("div");e.className="entry"+(pending?" pending":"");
       e.innerHTML=`
         <button class="entry-head" aria-expanded="false">
-          <span><span class="entry-title">${l.topic}</span>
+          <span><span class="entry-title">${l.topic}</span>${pending?'<span class="pending-badge">지도안 준비 중</span>':''}
           <span class="entry-meta">${l.subject} · ${l.tools}</span></span>
           <span class="udl-dots" title="${l.udl.join("·")}">${["표상","표현","참여"].map(u=>`<i class="${l.udl.includes(u)?"on":""}"></i>`).join("")}</span>
         </button>
         <div class="entry-body">
           ${l.goal?`<p><span class="k">소수 목표</span>${l.goal.replace(/^소수:\s*/,"")}</p>`:""}
           ${l.support?`<p><span class="k">지원 설계</span>${l.support}</p>`:""}
-          ${l.link?(isPdf
-            ?`<p><span class="k">수업 자료</span><a href="${l.link}" target="_blank" rel="noopener">새 탭에서 크게 보기</a></p><div class="pdf-embed" data-pdf="${l.link}"><p class="pdf-loading">펼치면 지도안이 아래에 나타납니다</p></div>`
-            :`<p><span class="k">수업 자료</span><a href="${l.link}" target="_blank" rel="noopener">과정안 열기</a></p>`
-          ):""}
+          ${pending
+            ?`<p><span class="k">수업 자료</span>지도안은 수업 실시 후 공개됩니다.</p>`
+            :(l.link?(isPdf
+              ?`<p><span class="k">수업 자료</span><a href="${l.link}" target="_blank" rel="noopener">새 탭에서 크게 보기</a></p><div class="pdf-embed" data-pdf="${l.link}"><p class="pdf-loading">펼치면 지도안이 아래에 나타납니다</p></div>`
+              :`<p><span class="k">수업 자료</span><a href="${l.link}" target="_blank" rel="noopener">과정안 열기</a></p>`
+            ):"")}
           ${!hasBody?`<p><span class="k">안내</span>상세 자료는 교내 자료실에서 열람할 수 있습니다.</p>`:""}
         </div>`;
       const head=e.querySelector(".entry-head");
