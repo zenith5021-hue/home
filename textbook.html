@@ -166,7 +166,8 @@ footer p+p{margin-top:8px}
    thumb : 첫 화면 사진 경로, 예) "assets/3d/계절의변화.png" (비우면 단원 이름이 보입니다)
    =============================================================== */
 var UNITS = [
-  {grade:6, term:2, unit:1, title:"계절의 변화", desc:"태양 고도와 그림자, 계절별 낮의 길이, 기울어진 지구까지 네 장의 실험을 직접 움직여 봅니다.", url:"https://zenith5021-hue.github.io/3D611/", thumb:""},{grade:6, term:2, unit:2, title:"지구의 운동", desc:"", url:"https://zenith5021-hue.github.io/3D614/", thumb:"지구의 운동 과정을 실험을 통해 알아봅시다"},
+  {grade:6, term:2, unit:1, title:"계절의 변화", desc:"태양 고도와 그림자, 계절별 낮의 길이, 기울어진 지구까지 네 장의 실험을 직접 움직여 봅니다.", url:"https://zenith5021-hue.github.io/3D611/", thumb:""},
+  {grade:6, term:1, unit:4, title:"지구의 운동", desc:"지구의 운동 과정을 실험을 통해 알아봅시다.", url:"https://zenith5021-hue.github.io/3D614/", thumb:""},
 ];
 </script>
 <script>
@@ -180,9 +181,13 @@ if (BROKEN) window.UNITS = [];
 
 function card(u){
   const meta = `${u.grade}학년 ${u.term}학기 · ${u.unit}단원`;
-  const pop = u.thumb
-    ? `<img src="${esc(u.thumb)}" alt="" loading="lazy">`
-    : `<div class="mark"><small>${u.grade}-${u.term}-${u.unit}</small><b>${esc(u.title)}</b></div>`;
+  // thumb에 사진 주소가 아닌 글이 들어가도 깨지지 않게: 사진이 아니면 설명으로 쓰고, 사진을 못 불러오면 단원 이름을 보여 줌
+  const isImg = /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(u.thumb || "");
+  if (!u.desc && u.thumb && !isImg) u.desc = u.thumb;
+  const mark = `<div class="mark"${isImg ? ' style="display:none"' : ""}><small>${u.grade}-${u.term}-${u.unit}</small><b>${esc(u.title)}</b></div>`;
+  const pop = isImg
+    ? `<img src="${esc(u.thumb)}" alt="" loading="lazy" onerror="this.nextElementSibling.style.display='flex';this.remove()">${mark}`
+    : mark;
   const inner = `
     <div class="stage" aria-hidden="true">
       <div class="open-book"><div class="leaf l"></div><div class="leaf r"></div></div>
