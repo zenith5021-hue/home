@@ -62,6 +62,8 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(34px,6vw,58px);line-
 .nav-links a:focus-visible,.brand:focus-visible{outline:2px solid #fff;outline-offset:2px}
 .site-nav.solid{background:var(--celadon);box-shadow:0 1px 0 rgba(0,0,0,.12)}
 @media (max-width:520px){.nav-links a{padding:8px 7px;font-size:13.5px}.brand{font-size:15px}}
+@media (max-width:440px){.brand{display:none}.site-nav .wrap{justify-content:center}.nav-links a{padding:8px 6px;font-size:13px}}
+@media (max-width:360px){.site-nav .wrap{padding:0 8px}.nav-links{gap:0}.nav-links a{padding:8px 5px;font-size:12.5px}}
 
 /* 필터 */
 .filters{position:sticky;top:56px;z-index:20;background:var(--baekja);border-bottom:1px solid var(--line)}
@@ -149,6 +151,7 @@ footer p+p{margin-top:8px}
       <a href="./" aria-current="page">수업 아카이브</a>
       <a href="forms.html">대안평가 서식</a>
       <a href="books.html">평가자료</a>
+      <a href="textbook.html">3D 교과서</a>
     </div>
   </div>
 </nav>
@@ -274,17 +277,17 @@ const LESSONS = [
  {grade:"2학년",subject:"국어",topic:"이야기를 읽고 생각이나 느낌 표현하기",tools:"TTS · 음성 녹음",udl:["표상","표현","참여"],goal:"",support:"반복 읽기로 읽기 유창성 지원, 녹음한 자신의 읽기를 들으며 속도와 억양 점검",link:"docs/2학년_작품감상.pdf"},
  {grade:"1학년",subject:"수학",topic:"놀이를 통해 50까지의 수를 다양한 방법으로 표현하기",tools:"똑똑 수학탐험대",udl:["표상","표현","참여"],goal:"소수: 짝꿍과 협력해 시각적 순서 토큰에 따라 그림과 숫자 카드를 연결하기",support:"텍스트 대신 픽토그램과 시각적 타이머로 안내, 소수 학생용 숫자쓰기 판 제공",link:"docs/1학년_똑똑수학탐험대.pdf"},
  {grade:"1학년",subject:"통합",topic:"물놀이를 안전하게 하는 방법 알아보기",tools:"Suno · 그룩 · 캡컷",udl:["표상","표현","참여"],goal:"소수: 물놀이를 안전하게 하는 방법을 선택할 수 있다",support:"그림 중심 수준별 학습지 제공, 능숙한 친구와 짝을 지어 도움을 받도록 배치",link:"docs/1학년_물놀이.pdf"},
- {grade:"1학년",subject:"통합",topic:"새로운 동물이 나타난다면",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"docs/1학년_새로운동물.pdf"},
- {grade:"1학년",subject:"수학",topic:"규칙을 만들어 볼까요",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"docs/1학년_규칙만들기.pdf"},
- {grade:"2학년",subject:"통합",topic:"나도 돕고 싶어요",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"docs/2학년_나도돕고싶어요.pdf"},
- {grade:"2학년",subject:"통합",topic:"발명왕이 되고 싶어요",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"docs/2학년_발명왕.pdf"},
- {grade:"2학년",subject:"통합",topic:"어떤 어려움이 있을까요",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"docs/2학년_어떤어려움.pdf"},
- {grade:"3학년",subject:"사회",topic:"옛날 사람들이 이용했던 교통수단 알아보기",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"docs/3학년_교통수단.pdf"},
- {grade:"3학년",subject:"수학",topic:"분모가 같은 분수의 크기를 비교해 볼까요",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"docs/3학년_분수크기비교.pdf"},
- {grade:"4학년",subject:"국어",topic:"의견과 이유가 드러나게 제안하는 글 쓰기",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"docs/4학년_제안하는글쓰기.pdf"},
- {grade:"5학년",subject:"사회",topic:"조선의 발전에 따른 사람들의 생활 모습 알아보기",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"docs/5학년_조선의발전.pdf"},
- {grade:"6학년",subject:"국어",topic:"고유어의 가치를 알고 활용하기",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"docs/6학년_고유어.pdf"},
- {grade:"6학년",subject:"수학",topic:"비의 성질 알아보기",tools:"",udl:["표상","표현","참여"],goal:"",support:"",link:"docs/6학년_비의성질.pdf"}
+ {grade:"1학년",subject:"통합",topic:"새로운 동물이 나타난다면",tools:"캔바 · miracle AI",udl:["표상","표현","참여"],goal:"소수: 동물 그림카드에서 원하는 특징을 골라 조합하여 새로운 동물의 생김새를 상상하고 나타내기",support:"선택 범위를 단계적으로 좁혀 제시하고 시각적 타이머로 남은 시간 안내, 프롬프트 작성 대신 그림카드 배열로 표현",link:"docs/1학년_새로운동물.pdf"},
+ {grade:"1학년",subject:"수학",topic:"규칙을 만들어 볼까요",tools:"크롬 뮤직 랩",udl:["표상","표현","참여"],goal:"소수: 그림·물건·크롬 뮤직 랩을 탐색하며 규칙의 반복을 경험하고 반응하기",support:"짧은 문장으로 나누어 안내하고 시범 후 따라 하기, 더 단순한 리듬 프로그램 선택 유도, 태블릿에 익숙한 친구와 짝 활동",link:"docs/1학년_규칙만들기.pdf"},
+ {grade:"2학년",subject:"통합",topic:"나도 돕고 싶어요",tools:"패들릿 · AI 이미지 생성 · 바코드 스캐너",udl:["표상","표현","참여"],goal:"소수: 그림 자료와 상품 카드로 손님에게 맞는 상품을 고르고, 그 도움을 말하기·가리키기로 표현하기",support:"AI 이미지가 담긴 상품 카드와 그림 손님 카드, 바코드 스캐너 역할놀이로 참여 유도, 그림 고르기·친구와 함께 발표 허용",link:"docs/2학년_나도돕고싶어요.pdf"},
+ {grade:"2학년",subject:"통합",topic:"발명왕이 되고 싶어요",tools:"패들릿 · AI 이미지 생성",udl:["표상","표현","참여"],goal:"소수: AI의 도움을 받아 자신이 생각한 발명품을 그림으로 나타내기",support:"교사가 준비한 핵심어·짧은 문장을 고르거나 조합해 AI 그림 생성, 발명품 예시 그림과 발표문 예시 제공",link:"docs/2학년_발명왕.pdf"},
+ {grade:"2학년",subject:"통합",topic:"어떤 어려움이 있을까요",tools:"",udl:["표상","표현","참여"],goal:"소수: 다른 사람의 처지가 되어 어떤 어려움이 있는지 몸으로 표현하고 단어로 말하기",support:"개별 호명과 작은 단위의 안내로 활동 시작 돕기, 충분한 시간 제공, 교사가 친구들과 표현을 주고받도록 연결",link:"docs/2학년_어떤어려움.pdf"},
+ {grade:"3학년",subject:"사회",topic:"옛날 사람들이 이용했던 교통수단 알아보기",tools:"세이펜 · 띵커벨",udl:["표상","표현","참여"],goal:"소수: 옛날 교통수단 그림 카드를 보고 들으며 이름과 그림 짝짓기",support:"세이펜 녹음 그림 카드로 이름과 모습을 소리로 제시, 글쓰기·말하기 대신 가리키기와 세이펜 재생으로 참여",link:"docs/3학년_교통수단.pdf"},
+ {grade:"3학년",subject:"수학",topic:"분모가 같은 분수의 크기를 비교해 볼까요",tools:"Math Learning Center",udl:["표상","표현","참여"],goal:"소수: 분모가 같은 가분수와 대분수의 크기를 시각화하여 나타내고 비교하기",support:"수직선과 분수 앱으로 자유롭게 시각화, 부등호 대신 말하기·더 큰 것 고르기 허용, 같은 형태의 문제 반복 제공",link:"docs/3학년_분수크기비교.pdf"},
+ {grade:"4학년",subject:"국어",topic:"의견과 이유가 드러나게 제안하는 글 쓰기",tools:"",udl:["표상","참여"],goal:"소수: 핵심 단어와 문장 틀을 활용해 문제 상황·제안·까닭이 드러나게 제안하는 글 쓰기",support:"고민 시각자료와 핵심 단어 밑줄 표시, [문제 상황]-[제안]-[제안하는 까닭] 순서의 보조 문장 틀 제공",link:"docs/4학년_제안하는글쓰기.pdf"},
+ {grade:"5학년",subject:"사회",topic:"조선의 발전에 따른 사람들의 생활 모습 알아보기",tools:"띵커벨 · 캔바",udl:["표상","표현","참여"],goal:"소수: 세종 대 농업·과학·문화의 발전이 사람들의 생활에 미친 영향을 보기에서 찾아 고르기",support:"보기에서 골라 생각을 나타내는 개인 학습지, 글자 수를 줄이고 그림 단서를 넣은 활동지, 협동 퍼즐로 참여 기회 제공",link:"docs/5학년_조선의발전.pdf"},
+ {grade:"6학년",subject:"국어",topic:"고유어의 가치를 알고 활용하기",tools:"인터넷 국어사전 · 웹퀴즈",udl:["표상","표현","참여"],goal:"소수: 고유어와 문장을 연결하거나 알맞은 고유어로 문장의 빈칸 채우기",support:"그림 자료로 낱말 뜻 제시, 글쓰기 대신 선 잇기·빈칸 채우기 중 선택, 또래 도우미와 함께 사전·퀴즈 활동",link:"docs/6학년_고유어.pdf"},
+ {grade:"6학년",subject:"수학",topic:"비의 성질 알아보기",tools:"띵커벨",udl:["표상","표현","참여"],goal:"소수: 시각 자료와 배움 학습지로 전항·후항을 구별하고 비율이 같은 비를 2~3개 만들기",support:"구체물 그림 단서와 전항·후항 색상 구분, 띵커벨 입력 대신 배움 학습지·숫자 카드 제공, 또래 멘토 짝 배치",link:"docs/6학년_비의성질.pdf"}
 ];
 
 const TOOLS = [

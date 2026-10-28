@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D 교과서 — L.I.N.K. 아카이브</title>
+<meta name="description" content="펼친 책 위로 실험이 솟아오르는 3D 과학 교과서 — 초등 3~6학년 과학 단원">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --celadon:#3d6e5c;
+  --celadon-dim:#5d8a79;
+  --buncheong:#e8e4d8;
+  --baekja:#fbfaf5;
+  --ink:#1c2723;
+  --ink-soft:#5f6d66;
+  --line:#dcd8cb;
+  --serif:"Noto Serif KR",serif;
+  --sans:"Pretendard Variable",Pretendard,-apple-system,"Malgun Gothic",sans-serif;
+  /* 3D 교과서 화면 전용 — 평가자료 책장과 같은 깊은 청자 바탕 */
+  --deep:#13201b;
+  --deep-2:#1a2b25;
+  --glow:120,232,196;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--deep);color:#e9efeb;font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+
+/* 메뉴 띠 — 모든 화면 공통 */
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:40;height:56px;display:flex;align-items:center;transition:background .25s ease,box-shadow .25s ease}
+.site-nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%}
+.brand{font-family:var(--serif);font-weight:900;font-size:17px;letter-spacing:.04em;color:#fff;text-decoration:none;white-space:nowrap}
+.nav-links{display:flex;gap:2px}
+.nav-links a{padding:8px 12px;font-size:14px;color:rgba(255,255,255,.8);text-decoration:none;white-space:nowrap;border-radius:2px}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-links a[aria-current="page"]{color:#fff;font-weight:700;box-shadow:inset 0 -2px 0 #fff}
+.nav-links a:focus-visible,.brand:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.site-nav.solid{background:var(--celadon);box-shadow:0 1px 0 rgba(0,0,0,.12)}
+@media (max-width:520px){.nav-links a{padding:8px 7px;font-size:13.5px}.brand{font-size:15px}}
+@media (max-width:440px){.brand{display:none}.site-nav .wrap{justify-content:center}.nav-links a{padding:8px 6px;font-size:13px}}
+@media (max-width:360px){.site-nav .wrap{padding:0 8px}.nav-links{gap:0}.nav-links a{padding:8px 5px;font-size:12.5px}}
+
+/* 머리말 */
+.page-head{padding:120px 0 40px;background:
+  radial-gradient(90% 120% at 80% -20%, rgba(93,138,121,.35), transparent 60%),
+  linear-gradient(var(--celadon), var(--deep))}
+.school{font-size:14px;letter-spacing:.02em;color:#b9cfc4;margin-bottom:18px}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,44px);line-height:1.3;letter-spacing:-0.01em;color:#fff}
+.lede{margin-top:18px;max-width:620px;font-size:16px;color:#cddbd3;word-break:keep-all}
+.tally{margin-top:26px;font-family:var(--serif);font-size:17px;color:#fff;border-top:1px solid rgba(255,255,255,.22);display:inline-block;padding-top:14px}
+.tally b{font-weight:900;font-size:22px;padding:0 2px}
+
+/* 학년 고르기 */
+.grades{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 34px}
+.grades button{all:unset;cursor:pointer;padding:7px 16px;border:1px solid rgba(255,255,255,.22);border-radius:999px;font-size:14px;color:#cddbd3}
+.grades button:hover{border-color:rgba(var(--glow),.6);color:#fff}
+.grades button[aria-pressed="true"]{background:#e9efeb;border-color:#e9efeb;color:var(--deep);font-weight:700}
+.grades button:focus-visible{outline:2px solid rgba(var(--glow),.9);outline-offset:2px}
+
+main{padding:36px 0 110px;background:radial-gradient(70% 50% at 50% 0%, var(--deep-2), transparent 70%)}
+.term{margin-bottom:54px}
+.term-head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:10px;margin-bottom:26px}
+.term-head h2{font-family:var(--serif);font-weight:900;font-size:22px;color:#fff}
+.term-head span{font-size:13.5px;color:#8ea39a}
+.shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:40px 26px}
+
+/* 단원 하나 — 펼친 책 위로 화면이 솟아오른다 */
+.unit{display:flex;flex-direction:column;gap:14px;color:inherit;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.stage{position:relative;height:230px;perspective:900px;perspective-origin:50% 20%}
+.open-book{position:absolute;left:50%;bottom:22px;width:252px;height:150px;margin-left:-126px;
+  transform:rotateX(60deg);transform-style:preserve-3d;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.open-book::before{content:"";position:absolute;inset:-7px -9px;border-radius:7px;transform:translateZ(-3px);
+  background:linear-gradient(160deg,color-mix(in srgb,var(--celadon) 85%,#fff 15%),var(--celadon) 50%,color-mix(in srgb,var(--celadon) 65%,#000 35%))}
+.leaf{position:absolute;top:0;width:50%;height:100%;
+  background:repeating-linear-gradient(180deg,transparent 0 17px,rgba(60,70,64,.13) 17px 18px),
+             linear-gradient(90deg,#f4f1e8,#fbfaf5 70%,#e4dfd1)}
+.leaf.l{left:0;border-radius:5px 0 0 5px;transform-origin:100% 50%;transform:rotateY(10deg);
+  background:repeating-linear-gradient(180deg,transparent 0 17px,rgba(60,70,64,.13) 17px 18px),
+             linear-gradient(90deg,#e4dfd1,#fbfaf5 30%,#f4f1e8)}
+.leaf.r{right:0;border-radius:0 5px 5px 0;transform-origin:0 50%;transform:rotateY(-10deg)}
+.open-book::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:10px;margin-left:-5px;
+  background:linear-gradient(90deg,transparent,rgba(0,0,0,.18),transparent)}
+/* 솟아오르는 화면 */
+.pop{position:absolute;left:50%;bottom:74px;width:210px;height:132px;margin-left:-105px;border-radius:6px;overflow:hidden;
+  background:radial-gradient(110% 90% at 30% 10%,rgba(var(--glow),.28),transparent 60%),linear-gradient(160deg,#24423a,#13201b);
+  box-shadow:0 18px 30px rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.12);
+  transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease}
+.pop img{display:block;width:100%;height:100%;object-fit:cover}
+.pop .mark{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;padding:10px}
+.pop .mark b{font-family:var(--serif);font-weight:900;font-size:21px;color:#fff;line-height:1.25;word-break:keep-all}
+.pop .mark small{font-size:12px;letter-spacing:.08em;color:rgba(var(--glow),.9)}
+/* 화면 받침 그림자 */
+.stage::after{content:"";position:absolute;left:50%;bottom:4px;width:250px;height:22px;margin-left:-125px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(0,0,0,.55),transparent);transition:background .35s ease}
+
+.unit-meta{font-size:13px;color:#8ea39a;letter-spacing:.01em}
+.unit-title{font-family:var(--serif);font-weight:900;font-size:20px;color:#fff;line-height:1.35;margin-top:-8px}
+.unit-desc{font-size:14.5px;color:#b9cbc2;word-break:keep-all}
+.unit-go{align-self:flex-start;margin-top:2px;padding:7px 14px;border:1px solid rgba(214,243,232,.55);border-radius:2px;font-size:13.5px;font-weight:600;color:#d6f3e8}
+.unit .waiting{align-self:flex-start;padding:3px 11px;border:1px dashed rgba(169,188,178,.5);border-radius:2px;font-size:12.5px;color:#a9bcb2}
+
+a.unit:hover .pop,a.unit:focus-visible .pop{transform:translateY(-14px) scale(1.04);
+  box-shadow:0 0 0 1px rgba(var(--glow),.6),0 0 30px 6px rgba(var(--glow),.5),0 0 80px 18px rgba(var(--glow),.22)}
+a.unit:hover .open-book,a.unit:focus-visible .open-book{transform:rotateX(56deg)}
+a.unit:hover .stage::after,a.unit:focus-visible .stage::after{background:radial-gradient(closest-side,rgba(var(--glow),.4),transparent)}
+a.unit:hover .unit-go,a.unit:focus-visible .unit-go{background:#e9efeb;color:var(--deep);border-color:#e9efeb}
+a.unit:focus-visible{outline:none}
+.unit.soon .pop,.unit.soon .open-book{filter:saturate(.3) brightness(.62)}
+
+.empty{color:#8ea39a;font-size:15px;padding:30px 0}
+
+footer{border-top:1px solid rgba(255,255,255,.08);padding:30px 0 44px}
+footer p{font-size:13.5px;color:#8ea39a;max-width:640px}
+footer p+p{margin-top:8px}
+
+@media (max-width:360px){.stage{transform:scale(.9);transform-origin:50% 100%}}
+@media (prefers-reduced-motion:reduce){.pop,.open-book,.stage::after{transition:none}
+  a.unit:hover .pop,a.unit:focus-visible .pop{transform:none}}
+</style>
+</head>
+<body>
+
+<nav class="site-nav solid" aria-label="사이트 메뉴">
+  <div class="wrap">
+    <a class="brand" href="./">L.I.N.K.</a>
+    <div class="nav-links">
+      <a href="./">수업 아카이브</a>
+      <a href="forms.html">대안평가 서식</a>
+      <a href="books.html">평가자료</a>
+      <a href="textbook.html" aria-current="page">3D 교과서</a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-head">
+  <div class="wrap">
+    <p class="school">양구초등학교 통합교육 연구학교 · L.I.N.K. 프로그램</p>
+    <h1>펼쳐 보는 3D 과학 교과서</h1>
+    <p class="lede">단원마다 핵심 실험을 골라, 펼친 책 위에서 직접 돌려 보고 움직여 볼 수 있게 만들었습니다. 책을 누르면 새 창에서 열립니다.</p>
+    <p class="tally"><b id="t-ready">0</b>개 단원 공개</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="grades" id="grades" role="group" aria-label="학년 고르기"></div>
+    <div id="list"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>3D 교과서는 L.I.N.K. 연구학교 교사가 직접 만든 웹앱입니다. 태블릿·컴퓨터 브라우저에서 설치 없이 열립니다.</p>
+    <p>양구초등학교 L.I.N.K. 연구학교 (2025–2026) · 문의: 연구부(033-481-0585)</p>
+  </div>
+</footer>
+
+<script>
+/* ===============================================================
+   3D 교과서 목록 — 단원을 더할 때는 아래에 한 줄을 복사해 고치면 됩니다.
+   grade : 학년(숫자)      term : 학기(숫자)      unit : 단원 번호(숫자)
+   title : 단원 이름       desc : 한 줄 설명(비워도 됨)
+   url   : 배포한 앱 주소 (비우면 "준비 중"으로 보입니다)
+   thumb : 첫 화면 사진 경로, 예) "assets/3d/계절의변화.png" (비우면 단원 이름이 보입니다)
+   =============================================================== */
+const UNITS = [
+  {grade:6, term:2, unit:1, title:"계절의 변화", desc:"", url:"", thumb:""},
+];
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let pick = 0; // 0 = 전체
+
+function card(u){
+  const meta = `${u.grade}학년 ${u.term}학기 · ${u.unit}단원`;
+  const pop = u.thumb
+    ? `<img src="${esc(u.thumb)}" alt="" loading="lazy">`
+    : `<div class="mark"><small>${u.grade}-${u.term}-${u.unit}</small><b>${esc(u.title)}</b></div>`;
+  const inner = `
+    <div class="stage" aria-hidden="true">
+      <div class="open-book"><div class="leaf l"></div><div class="leaf r"></div></div>
+      <div class="pop">${pop}</div>
+    </div>
+    <p class="unit-meta">${meta}</p>
+    <h3 class="unit-title">${esc(u.title)}</h3>
+    ${u.desc ? `<p class="unit-desc">${esc(u.desc)}</p>` : ""}
+    ${u.url ? `<span class="unit-go">3D 교과서 열기 ↗</span>` : `<span class="waiting">준비 중</span>`}`;
+  return u.url
+    ? `<a class="unit" href="${esc(u.url)}" target="_blank" rel="noopener" aria-label="${esc(u.title)} 3D 교과서 열기 (새 창)">${inner}</a>`
+    : `<div class="unit soon">${inner}</div>`;
+}
+
+function render(){
+  const rows = UNITS.filter(u => !pick || u.grade === pick)
+    .sort((a,b) => a.grade-b.grade || a.term-b.term || a.unit-b.unit);
+  const groups = {};
+  rows.forEach(u => (groups[`${u.grade}-${u.term}`] ??= []).push(u));
+  const keys = Object.keys(groups);
+  $("#list").innerHTML = keys.length ? keys.map(k => {
+    const [g,t] = k.split("-"), us = groups[k];
+    return `<section class="term"><div class="term-head"><h2>${g}학년 ${t}학기</h2><span>${us.length}개 단원</span></div>
+      <div class="shelf">${us.map(card).join("")}</div></section>`;
+  }).join("") : `<p class="empty">이 학년의 3D 교과서는 아직 준비 중입니다.</p>`;
+}
+
+function initGrades(){
+  const opts = [[0,"전체"],[3,"3학년"],[4,"4학년"],[5,"5학년"],[6,"6학년"]];
+  $("#grades").innerHTML = opts.map(([v,l]) => `<button type="button" data-g="${v}" aria-pressed="${v===pick}">${l}</button>`).join("");
+  $("#grades").addEventListener("click", e => {
+    const b = e.target.closest("button"); if (!b) return;
+    pick = +b.dataset.g;
+    $("#grades").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+    render();
+  });
+}
+
+$("#t-ready").textContent = UNITS.filter(u => u.url).length;
+initGrades(); render();
+</script>
+</body>
+</html>
