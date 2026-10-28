@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>대안평가 서식 — L.I.N.K. 아카이브</title>
+<meta name="description" content="대안평가 실행을 위한 서식 모음 — 판단 기준부터 작성 안내까지">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --celadon:#3d6e5c;
+  --celadon-dim:#5d8a79;
+  --buncheong:#e8e4d8;
+  --baekja:#fbfaf5;
+  --ink:#1c2723;
+  --ink-soft:#5f6d66;
+  --line:#dcd8cb;
+  --serif:"Noto Serif KR",serif;
+  --sans:"Pretendard Variable",Pretendard,-apple-system,"Malgun Gothic",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--baekja);color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px}
+
+/* 메뉴 띠 — 세 화면 공통 */
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:40;height:56px;display:flex;align-items:center;transition:background .25s ease,box-shadow .25s ease}
+.site-nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%}
+.brand{font-family:var(--serif);font-weight:900;font-size:17px;letter-spacing:.04em;color:#fff;text-decoration:none;white-space:nowrap}
+.nav-links{display:flex;gap:2px}
+.nav-links a{padding:8px 12px;font-size:14px;color:rgba(255,255,255,.8);text-decoration:none;white-space:nowrap;border-radius:2px}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-links a[aria-current="page"]{color:#fff;font-weight:700;box-shadow:inset 0 -2px 0 #fff}
+.nav-links a:focus-visible,.brand:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.site-nav.solid{background:var(--celadon);box-shadow:0 1px 0 rgba(0,0,0,.12)}
+@media (max-width:520px){.nav-links a{padding:8px 7px;font-size:13.5px}.brand{font-size:15px}}
+
+/* 유약 띠 */
+.glaze{display:flex;height:7px}
+.glaze i{flex:1}
+.glaze i:nth-child(1){background:var(--celadon)}
+.glaze i:nth-child(2){background:var(--buncheong)}
+.glaze i:nth-child(3){background:#fff;border-bottom:1px solid var(--line)}
+
+/* 머리말 */
+.page-head{padding:112px 0 52px;color:#f4f6f2;background:
+  radial-gradient(110% 100% at 85% -10%, rgba(255,255,255,.14), transparent 55%),
+  radial-gradient(90% 80% at 10% 120%, rgba(0,0,0,.18), transparent 60%),
+  var(--celadon)}
+.school{font-size:14px;letter-spacing:.02em;color:#cfe0d6;margin-bottom:18px}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,44px);line-height:1.3;letter-spacing:-0.01em}
+.lede{margin-top:18px;max-width:620px;font-size:16px;color:#dfe9e2}
+.tally{margin-top:26px;font-family:var(--serif);font-size:17px;color:#fff;border-top:1px solid rgba(255,255,255,.28);display:inline-block;padding-top:14px}
+.tally b{font-weight:900;font-size:22px;padding:0 2px}
+
+/* 묶음 */
+main{padding:56px 0 96px}
+.group{display:grid;grid-template-columns:150px 1fr;border-top:2px solid var(--ink)}
+.group+.group{margin-top:0}
+.group-name{padding:24px 0;font-family:var(--serif);font-weight:900;font-size:19px;color:var(--celadon);line-height:1.35}
+.items{border-left:1px solid var(--line)}
+.item{border-bottom:1px solid var(--line)}
+.item:last-child{border-bottom:0}
+.row{display:flex;gap:16px;align-items:flex-start;padding:20px 4px 20px 26px}
+.text{flex:1;min-width:0}
+.name{font-family:var(--serif);font-weight:600;font-size:18px;letter-spacing:-0.01em;line-height:1.45}
+.desc{display:block;font-size:14px;color:var(--ink-soft);margin-top:4px}
+.side{flex:none;display:flex;align-items:center;gap:10px;padding-top:2px}
+.fmt{font-size:11.5px;font-weight:700;letter-spacing:.06em;color:var(--ink-soft);border:1px solid var(--line);padding:2px 7px;border-radius:2px;background:#fff}
+.dl,.pick{display:inline-block;padding:6px 13px;border:1px solid var(--celadon);border-radius:2px;font:inherit;font-size:13.5px;font-weight:600;color:var(--celadon);background:#fff;text-decoration:none;white-space:nowrap;cursor:pointer}
+.dl:hover,.pick:hover,.pick[aria-expanded="true"]{background:var(--celadon);color:#fff}
+.dl:focus-visible,.pick:focus-visible,.chip:focus-visible{outline:2px solid var(--celadon);outline-offset:2px}
+.waiting{display:inline-block;padding:6px 12px;border:1px dashed #c3ccc6;border-radius:2px;font-size:13px;color:#8b968f;white-space:nowrap}
+.item.pending .name{color:#6c7a73}
+
+/* 체크리스트 교과 고르기 */
+.chips{display:none;flex-wrap:wrap;gap:8px;padding:0 4px 22px 26px}
+.item.open .chips{display:flex}
+.chip{display:inline-block;padding:6px 13px;border:1px solid var(--line);border-radius:2px;font-size:14px;color:var(--ink);background:#fff;text-decoration:none;white-space:nowrap}
+a.chip:hover{border-color:var(--celadon);color:var(--celadon)}
+span.chip{color:#a4ada8;border-style:dashed}
+
+footer{background:var(--buncheong);border-top:1px solid var(--line);padding:36px 0 48px}
+footer p{font-size:13.5px;color:var(--ink-soft);max-width:640px}
+footer p+p{margin-top:8px}
+
+@media (max-width:680px){
+  .group{grid-template-columns:1fr}
+  .group-name{padding:22px 0 6px;font-size:18px}
+  .items{border-left:0}
+  .row{padding-left:4px;flex-wrap:wrap}
+  .side{width:100%}
+  .chips{padding-left:4px}
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav solid" aria-label="사이트 메뉴">
+  <div class="wrap">
+    <a class="brand" href="./">L.I.N.K.</a>
+    <div class="nav-links">
+      <a href="./">수업 아카이브</a>
+      <a href="forms.html" aria-current="page">대안평가 서식</a>
+      <a href="books.html">평가자료</a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-head">
+  <div class="wrap">
+    <p class="school">양구초등학교 통합교육 연구학교 · L.I.N.K. 프로그램</p>
+    <h1>대안평가 실행을 위한 서식 모음</h1>
+    <p class="lede">다른 학교에서도 대안평가를 실행할 수 있도록 판단 기준부터 작성 안내까지 아홉 가지 자료를 절차 순서대로 모았습니다.</p>
+    <p class="tally"><b id="t-ready">0</b>종 공개 · 전체 <b id="t-all">0</b>종</p>
+  </div>
+</header>
+<div class="glaze" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<main class="wrap" id="list" aria-live="polite"></main>
+
+<footer>
+  <div class="wrap">
+    <p>이 페이지는 개인정보가 포함되지 않은 공개 자료만 게시합니다. 서식은 학교 사정에 맞게 고쳐 쓸 수 있습니다.</p>
+    <p>양구초등학교 L.I.N.K. 연구학교 (2025–2026) · 문의: 연구부(033-481-0585)</p>
+  </div>
+</footer>
+
+<script>
+/* ===============================================================
+   서식 목록. file에 적힌 이름 그대로 forms 폴더에 올리면
+   내려받기 단추가 저절로 생깁니다. 체크리스트처럼 파일이 여럿이면 files에 나열합니다.
+   =============================================================== */
+const SUBJECTS=["국어","수학","사회","과학","영어","음악","미술","실과","도덕","체육","통합교과"];
+const GROUPS=[
+ {name:"판단 기준", items:[
+  {name:"적격성 판단 흐름도", desc:"대안평가 대상 여부와 유형을 차례로 판단하는 흐름도", file:"forms/적격성판단흐름도.png", view:true},
+  {name:"평가 유형의 정의", desc:"정규평가부터 성취기준 대체 대안평가까지 다섯 가지 평가 유형의 뜻", file:"forms/평가유형의정의.png", view:true}
+ ]},
+ {name:"진단 도구", items:[
+  {name:"출발점 진단 체크리스트", desc:"교과별 성취기준에 따라 학생의 현행 수준을 진단 (11개 교과)",
+   files:SUBJECTS.map(s=>({label:s, file:`forms/체크리스트_${s}.xlsx`}))},
+  {name:"학습자·상황 분석 조사지", desc:"통합학급 교사와 협의하며 학생의 특성과 수업 여건을 기록하는 조사지", file:"forms/학습자상황분석조사지.hwpx"}
+ ]},
+ {name:"서식", items:[
+  {name:"적격성·유형 결정서", desc:"판단 기록과 유형 결정, 협의와 보호자 동의를 남기는 개별화교육계획 첨부 서식", file:"forms/적격성유형결정서.hwpx"},
+  {name:"개별화교육계획 양식", desc:"나이스 개별화교육계획 화면 구성에 맞춘 대안평가 적용 양식", file:"forms/개별화교육계획양식.hwpx"},
+  {name:"학생별 평가계획 양식", desc:"성취기준·평가 기준·평가 방법·지원 조건을 학생별로 계획하는 양식 (작성 예시 포함)", file:"forms/학생별평가계획양식.hwpx"}
+ ]},
+ {name:"보호자 안내", items:[
+  {name:"대안평가 안내문", desc:"보호자에게 다섯 가지 평가 참여 방법을 설명하는 안내문", file:"forms/대안평가안내문.hwpx"}
+ ]},
+ {name:"작성 지원", items:[
+  {name:"통합학급 교사용 작성 안내", desc:"담임·교과전담교사가 대안평가 교과의 학기별·월별 개별화교육계획을 쓰는 방법", file:"forms/통합학급교사용작성안내.hwpx"}
+ ]}
+];
+
+const FOUND=new Set();
+const ext=f=>(f.split(".").pop()||"").toUpperCase();
+const allPaths=()=>GROUPS.flatMap(g=>g.items.flatMap(i=>i.files?i.files.map(x=>x.file):[i.file]));
+const itemReady=i=>i.files?i.files.some(x=>FOUND.has(x.file)):FOUND.has(i.file);
+
+function render(){
+  const $l=document.getElementById("list");
+  $l.innerHTML="";
+  GROUPS.forEach(g=>{
+    const sec=document.createElement("section");
+    sec.className="group";
+    sec.innerHTML=`<h2 class="group-name">${g.name}</h2><div class="items"></div>`;
+    const $items=sec.querySelector(".items");
+    g.items.forEach(i=>{
+      const ready=itemReady(i);
+      const el=document.createElement("div");
+      el.className="item"+(ready?"":" pending");
+      let side;
+      if(!ready) side=`<span class="waiting">준비 중</span>`;
+      else if(i.files) side=`<span class="fmt">${ext(i.files[0].file)}</span><button class="pick" type="button" aria-expanded="false">교과 고르기</button>`;
+      else side=`<span class="fmt">${ext(i.file)}</span>${i.view?`<a class="dl" href="${i.file}" target="_blank" rel="noopener">보기</a>`:""}<a class="dl" href="${i.file}" download>내려받기</a>`;
+      el.innerHTML=`
+        <div class="row">
+          <span class="text"><span class="name">${i.name}</span><span class="desc">${i.desc}</span></span>
+          <span class="side">${side}</span>
+        </div>
+        ${i.files&&ready?`<div class="chips">${i.files.map(x=>FOUND.has(x.file)
+            ?`<a class="chip" href="${x.file}" download>${x.label}</a>`
+            :`<span class="chip" title="준비 중">${x.label}</span>`).join("")}</div>`:""}`;
+      const pick=el.querySelector(".pick");
+      if(pick)pick.addEventListener("click",()=>{
+        const open=el.classList.toggle("open");pick.setAttribute("aria-expanded",open);
+      });
+      $items.appendChild(el);
+    });
+    $l.appendChild(sec);
+  });
+  const items=GROUPS.flatMap(g=>g.items);
+  document.getElementById("t-all").textContent=items.length;
+  document.getElementById("t-ready").textContent=items.filter(itemReady).length;
+}
+
+/* forms 폴더에 파일이 올라와 있는지 확인 */
+async function checkFiles(){
+  const paths=allPaths();
+  if(location.protocol==="file:"){paths.forEach(p=>FOUND.add(p));render();return;}
+  for(let k=0;k<paths.length;k+=6){
+    await Promise.all(paths.slice(k,k+6).map(async p=>{
+      try{const r=await fetch(encodeURI(p),{method:"HEAD"});if(r.ok)FOUND.add(p);}catch(e){}
+    }));
+  }
+  render();
+}
+render();
+checkFiles();
+</script>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>평가자료 — L.I.N.K. 아카이브</title>
+<meta name="description" content="장애학생 교수학습 지원을 위한 평가자료 — 초등 11개 교과">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --celadon:#3d6e5c;
+  --celadon-dim:#5d8a79;
+  --buncheong:#e8e4d8;
+  --baekja:#fbfaf5;
+  --ink:#1c2723;
+  --ink-soft:#5f6d66;
+  --line:#dcd8cb;
+  --serif:"Noto Serif KR",serif;
+  --sans:"Pretendard Variable",Pretendard,-apple-system,"Malgun Gothic",sans-serif;
+  /* 책장 화면 전용 */
+  --shelf:#13201b;          /* 깊은 청자 유약빛 바탕 */
+  --shelf-2:#1a2b25;
+  --glow:120,232,196;       /* 청자빛 광채 (r,g,b) */
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--shelf);color:#e9efeb;font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+
+/* 메뉴 띠 — 세 화면 공통 */
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:40;height:56px;display:flex;align-items:center;transition:background .25s ease,box-shadow .25s ease}
+.site-nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%}
+.brand{font-family:var(--serif);font-weight:900;font-size:17px;letter-spacing:.04em;color:#fff;text-decoration:none;white-space:nowrap}
+.nav-links{display:flex;gap:2px}
+.nav-links a{padding:8px 12px;font-size:14px;color:rgba(255,255,255,.8);text-decoration:none;white-space:nowrap;border-radius:2px}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-links a[aria-current="page"]{color:#fff;font-weight:700;box-shadow:inset 0 -2px 0 #fff}
+.nav-links a:focus-visible,.brand:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.site-nav.solid{background:var(--celadon);box-shadow:0 1px 0 rgba(0,0,0,.12)}
+@media (max-width:520px){.nav-links a{padding:8px 7px;font-size:13.5px}.brand{font-size:15px}}
+
+/* 머리말 */
+.page-head{padding:120px 0 40px;background:
+  radial-gradient(90% 120% at 80% -20%, rgba(93,138,121,.35), transparent 60%),
+  linear-gradient(var(--celadon), var(--shelf))}
+.school{font-size:14px;letter-spacing:.02em;color:#b9cfc4;margin-bottom:18px}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,44px);line-height:1.3;letter-spacing:-0.01em;color:#fff}
+.lede{margin-top:18px;max-width:620px;font-size:16px;color:#cddbd3}
+.tally{margin-top:26px;font-family:var(--serif);font-size:17px;color:#fff;border-top:1px solid rgba(255,255,255,.22);display:inline-block;padding-top:14px}
+.tally b{font-weight:900;font-size:22px;padding:0 2px}
+
+/* 책장 */
+main{padding:40px 0 110px;background:radial-gradient(70% 50% at 50% 0%, var(--shelf-2), transparent 70%)}
+.shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(calc(var(--w) + 34px),1fr));gap:58px 22px;justify-items:center;
+  --w:168px;--h:236px;--d:22px}
+@media (max-width:560px){.shelf{--w:132px;--h:186px;--d:17px;gap:46px 10px}}
+
+.book{all:unset;display:flex;flex-direction:column;align-items:center;gap:16px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.book[aria-disabled="true"]{cursor:default}
+.stage{position:relative;width:var(--w);height:var(--h);perspective:1100px}
+/* 책 바닥 그림자 */
+.stage::after{content:"";position:absolute;left:8%;right:2%;bottom:-16px;height:18px;border-radius:50%;
+  background:radial-gradient(closest-side, rgba(0,0,0,.6), transparent);transition:background .35s ease,transform .35s ease}
+
+.book3d{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateY(22deg);
+  transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.face{position:absolute;backface-visibility:hidden}
+
+/* 앞표지 */
+.cover{inset:0;transform:translateZ(calc(var(--d) / 2));border-radius:2px 5px 5px 2px;overflow:hidden;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.34) 0, rgba(0,0,0,.12) 5px, rgba(255,255,255,.10) 7px, transparent 12px),
+    radial-gradient(120% 80% at 20% 0%, rgba(255,255,255,.20), transparent 55%),
+    linear-gradient(170deg, color-mix(in srgb, var(--c) 82%, #fff 18%), var(--c) 45%, color-mix(in srgb, var(--c) 70%, #000 30%));
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+  transition:box-shadow .35s ease, filter .35s ease}
+.frame{position:absolute;inset:11px 11px 11px 15px;border:1px solid rgba(255,255,255,.38);
+  display:flex;flex-direction:column;align-items:center;text-align:center;padding:16% 8px 10px}
+.b-title{font-family:var(--serif);font-weight:600;font-size:calc(var(--w) * .2);line-height:1.15;color:#fff;letter-spacing:.02em;
+  text-shadow:0 1px 0 rgba(0,0,0,.18);white-space:nowrap}
+.b-title.long{font-size:calc(var(--w) * .15);letter-spacing:0}
+.b-rule{width:28%;height:1px;background:rgba(255,255,255,.5);margin:12% 0 0}
+.b-sub{margin-top:auto;font-size:calc(var(--w) * .062);line-height:1.5;color:rgba(255,255,255,.82);word-break:keep-all}
+.b-school{margin-top:6px;font-size:calc(var(--w) * .056);color:rgba(255,255,255,.6);letter-spacing:.06em}
+
+/* 책등 */
+.spine{top:0;height:100%;width:var(--d);left:calc(var(--d) / -2);transform:rotateY(-90deg);
+  background:linear-gradient(90deg, color-mix(in srgb, var(--c) 55%, #000 45%), color-mix(in srgb, var(--c) 78%, #000 22%) 60%, color-mix(in srgb, var(--c) 60%, #000 40%));
+  border-radius:3px 0 0 3px;transition:filter .35s ease}
+.spine::before,.spine::after{content:"";position:absolute;left:0;right:0;height:2px;background:rgba(255,255,255,.22)}
+.spine::before{top:14%}.spine::after{bottom:14%}
+/* 책장(종이) 옆면 */
+.pages{top:4px;height:calc(100% - 8px);width:var(--d);left:calc(var(--w) - var(--d) / 2);transform:rotateY(90deg);
+  background:repeating-linear-gradient(90deg,#ece7da 0 1px,#d9d2c1 1px 2px)}
+
+/* 글자 아래 줄 */
+.caption{font-size:13.5px;color:#a9bcb2;display:flex;gap:10px;align-items:center;min-height:22px}
+.caption a{color:#d6f3e8;text-decoration:none;border-bottom:1px solid rgba(214,243,232,.35);padding-bottom:1px}
+.caption a:hover{color:#fff;border-bottom-color:#fff}
+.caption .waiting{padding:2px 10px;border:1px dashed rgba(169,188,178,.5);border-radius:2px;font-size:12.5px}
+
+/* 마우스를 올리거나 키보드로 고르면: 책이 정면으로 돌아오며 떠오르고 청자빛이 번진다 */
+.book:not([aria-disabled="true"]):hover .book3d,
+.book:not([aria-disabled="true"]):focus-visible .book3d{transform:rotateY(0deg) translateY(-10px) scale(1.07)}
+.book:not([aria-disabled="true"]):hover .cover,
+.book:not([aria-disabled="true"]):focus-visible .cover{
+  box-shadow:inset 0 0 0 1px rgba(var(--glow),.55),
+             0 0 0 1px rgba(var(--glow),.55),
+             0 0 30px 6px rgba(var(--glow),.62),
+             0 0 84px 20px rgba(var(--glow),.28)}
+.book:not([aria-disabled="true"]):hover .stage::after,
+.book:not([aria-disabled="true"]):focus-visible .stage::after{
+  background:radial-gradient(closest-side, rgba(var(--glow),.45), transparent);transform:scaleX(1.12)}
+.book:focus-visible{outline:none}
+
+/* 아직 올라오지 않은 책 */
+.book[aria-disabled="true"] .cover,.book[aria-disabled="true"] .spine{filter:saturate(.25) brightness(.62)}
+.book[aria-disabled="true"] .book3d{transform:rotateY(22deg)}
+
+/* 읽기 창 */
+.reader{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:24px;
+  background:rgba(8,14,12,.78);backdrop-filter:blur(3px)}
+.reader.open{display:flex}
+.panel{width:min(1000px,100%);height:min(92vh,1100px);display:flex;flex-direction:column;background:#fbfaf5;border-radius:4px;overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.panel-head{display:flex;align-items:center;gap:12px;padding:12px 14px 12px 20px;background:var(--celadon);color:#fff}
+.panel-title{font-family:var(--serif);font-weight:900;font-size:18px}
+.panel-sub{font-size:13px;color:#cfe0d6;margin-left:4px}
+.panel-actions{margin-left:auto;display:flex;gap:8px}
+.btn{display:inline-block;padding:7px 13px;border:1px solid rgba(255,255,255,.7);border-radius:2px;font:inherit;font-size:13.5px;font-weight:600;color:#fff;background:transparent;text-decoration:none;cursor:pointer;white-space:nowrap}
+.btn:hover{background:#fff;color:var(--celadon)}
+.btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.panel iframe{flex:1;width:100%;border:0;background:#e9e7df}
+
+footer{border-top:1px solid rgba(255,255,255,.08);padding:30px 0 44px}
+footer p{font-size:13.5px;color:#8ea39a;max-width:640px}
+footer p+p{margin-top:8px}
+
+@media (prefers-reduced-motion:reduce){
+  .book3d,.cover,.spine,.stage::after{transition:none}
+  .book:not([aria-disabled="true"]):hover .book3d,
+  .book:not([aria-disabled="true"]):focus-visible .book3d{transform:rotateY(22deg)}
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav solid" aria-label="사이트 메뉴">
+  <div class="wrap">
+    <a class="brand" href="./">L.I.N.K.</a>
+    <div class="nav-links">
+      <a href="./">수업 아카이브</a>
+      <a href="forms.html">대안평가 서식</a>
+      <a href="books.html" aria-current="page">평가자료</a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-head">
+  <div class="wrap">
+    <p class="school">양구초등학교 통합교육 연구학교 · L.I.N.K. 프로그램</p>
+    <h1>장애학생 교수학습 지원을 위한 평가자료</h1>
+    <p class="lede">초등 11개 교과의 평가자료입니다. 책을 누르면 바로 읽을 수 있고, 책 아래에서 내려받을 수 있습니다.</p>
+    <p class="tally"><b id="t-ready">0</b>권 공개 · 전체 <b id="t-all">0</b>권</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="shelf" id="shelf"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>이 페이지는 개인정보가 포함되지 않은 공개 자료만 게시합니다.</p>
+    <p>양구초등학교 L.I.N.K. 연구학교 (2025–2026) · 문의: 연구부(033-481-0585)</p>
+  </div>
+</footer>
+
+<div class="reader" id="reader" role="dialog" aria-modal="true" aria-labelledby="r-title">
+  <div class="panel">
+    <div class="panel-head">
+      <span class="panel-title" id="r-title"></span>
+      <span class="panel-sub">장애학생 교수학습 지원을 위한 평가자료</span>
+      <span class="panel-actions">
+        <a class="btn" id="r-down" download>내려받기</a>
+        <a class="btn" id="r-tab" target="_blank" rel="noopener">새 탭에서 보기</a>
+        <button class="btn" id="r-close" type="button" aria-label="읽기 창 닫기">닫기</button>
+      </span>
+    </div>
+    <iframe id="r-frame" title="평가자료 읽기"></iframe>
+  </div>
+</div>
+
+<script>
+/* ===============================================================
+   책 목록. file에 적힌 이름 그대로 books 폴더에 PDF를 올리면
+   그 책이 저절로 밝아지고 읽기·내려받기가 됩니다.
+   color는 표지 색입니다.
+   =============================================================== */
+const SUB="장애학생 교수학습 지원을 위한 평가자료";
+const BOOKS=[
+ {name:"국어",     color:"#2f4a7a", file:"books/국어.pdf"},
+ {name:"수학",     color:"#8a3b2e", file:"books/수학.pdf"},
+ {name:"사회",     color:"#7a5a2e", file:"books/사회.pdf"},
+ {name:"과학",     color:"#3d6e5c", file:"books/과학.pdf"},
+ {name:"영어",     color:"#2f6474", file:"books/영어.pdf"},
+ {name:"음악",     color:"#5e3f70", file:"books/음악.pdf"},
+ {name:"미술",     color:"#a8582c", file:"books/미술.pdf"},
+ {name:"실과",     color:"#5c6a2e", file:"books/실과.pdf"},
+ {name:"도덕",     color:"#44464d", file:"books/도덕.pdf"},
+ {name:"체육",     color:"#8f2f45", file:"books/체육.pdf"},
+ {name:"통합교과", color:"#556b80", file:"books/통합교과.pdf"}
+];
+
+const FOUND=new Set();
+const $shelf=document.getElementById("shelf");
+const narrow=()=>window.matchMedia("(max-width:700px)").matches||/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+function render(){
+  $shelf.innerHTML="";
+  BOOKS.forEach(b=>{
+    const ready=FOUND.has(b.file);
+    const el=document.createElement("div");
+    el.className="book";
+    el.setAttribute("role","button");
+    el.tabIndex=ready?0:-1;
+    el.setAttribute("aria-disabled",ready?"false":"true");
+    el.setAttribute("aria-label",b.name+" 평가자료"+(ready?" 읽기":" — 준비 중"));
+    el.style.setProperty("--c",b.color);
+    el.innerHTML=`
+      <span class="stage">
+        <span class="book3d">
+          <span class="face spine" aria-hidden="true"></span>
+          <span class="face pages" aria-hidden="true"></span>
+          <span class="face cover" aria-hidden="true">
+            <span class="frame">
+              <span class="b-title${b.name.length>2?" long":""}">${b.name}</span>
+              <span class="b-rule"></span>
+              <span class="b-sub">${SUB}</span>
+              <span class="b-school">양구초등학교</span>
+            </span>
+          </span>
+        </span>
+      </span>
+      <span class="caption">${ready
+        ?`<a href="${b.file}" download>내려받기</a>`
+        :`<span class="waiting">준비 중</span>`}</span>`;
+    if(ready){
+      const open=()=>openBook(b);
+      el.addEventListener("click",e=>{if(e.target.closest("a"))return;open();});
+      el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open();}});
+    }
+    $shelf.appendChild(el);
+  });
+  document.getElementById("t-all").textContent=BOOKS.length;
+  document.getElementById("t-ready").textContent=BOOKS.filter(b=>FOUND.has(b.file)).length;
+}
+
+/* 읽기 창 — 휴대전화에서는 화면이 좁고 내장 PDF 보기가 첫 쪽만 보여 주는 경우가 있어 새 탭으로 연다 */
+const $reader=document.getElementById("reader"), $frame=document.getElementById("r-frame");
+let lastFocus=null;
+function openBook(b){
+  if(narrow()){window.open(b.file,"_blank","noopener");return;}
+  lastFocus=document.activeElement;
+  document.getElementById("r-title").textContent=b.name;
+  document.getElementById("r-down").href=b.file;
+  document.getElementById("r-tab").href=b.file;
+  $frame.src=b.file;
+  $reader.classList.add("open");
+  document.body.style.overflow="hidden";
+  document.getElementById("r-close").focus();
+}
+function closeBook(){
+  $reader.classList.remove("open");
+  $frame.src="about:blank";
+  document.body.style.overflow="";
+  if(lastFocus)lastFocus.focus();
+}
+document.getElementById("r-close").addEventListener("click",closeBook);
+$reader.addEventListener("click",e=>{if(e.target===$reader)closeBook();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$reader.classList.contains("open"))closeBook();});
+
+/* books 폴더에 PDF가 올라와 있는지 확인 */
+async function checkFiles(){
+  if(location.protocol==="file:"){BOOKS.forEach(b=>FOUND.add(b.file));render();return;}
+  await Promise.all(BOOKS.map(async b=>{
+    try{const r=await fetch(encodeURI(b.file),{method:"HEAD"});if(r.ok)FOUND.add(b.file);}catch(e){}
+  }));
+  render();
+}
+
+render();
+checkFiles();
+</script>
+</body>
+</html>
