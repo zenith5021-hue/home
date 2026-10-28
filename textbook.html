@@ -165,12 +165,18 @@ footer p+p{margin-top:8px}
    url   : 배포한 앱 주소 (비우면 "준비 중"으로 보입니다)
    thumb : 첫 화면 사진 경로, 예) "assets/3d/계절의변화.png" (비우면 단원 이름이 보입니다)
    =============================================================== */
-const UNITS = [
+var UNITS = [
   {grade:6, term:2, unit:1, title:"계절의 변화", desc:"태양 고도와 그림자, 계절별 낮의 길이, 기울어진 지구까지 네 장의 실험을 직접 움직여 봅니다.", url:"https://zenith5021-hue.github.io/3D611/", thumb:""},
+];
+</script>
+<script>
+
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 let pick = 0; // 0 = 전체
+const BROKEN = typeof UNITS === "undefined";
+if (BROKEN) window.UNITS = [];
 
 function card(u){
   const meta = `${u.grade}학년 ${u.term}학기 · ${u.unit}단원`;
@@ -217,6 +223,7 @@ function initGrades(){
 
 $("#t-ready").textContent = UNITS.filter(u => u.url).length;
 initGrades(); render();
+if (BROKEN) $("#list").innerHTML = `<p class="empty">3D 교과서 목록을 읽지 못했습니다. textbook.html의 목록(UNITS)에서 따옴표·쉼표·괄호가 빠지거나 겹친 곳이 없는지 확인해 주세요.</p>`;
 </script>
 </body>
 </html>
