@@ -57,7 +57,7 @@ h1{font-family:var(--serif);font-weight:900;font-size:clamp(28px,4.6vw,44px);lin
 .tally b{font-weight:900;font-size:22px;padding:0 2px}
 
 /* 묶음 */
-main{padding:56px 0 96px}
+main.wrap{padding-top:44px;padding-bottom:96px}
 .group{display:grid;grid-template-columns:150px 1fr;border-top:2px solid var(--ink)}
 .group+.group{margin-top:0}
 .group-name{padding:24px 0;font-family:var(--serif);font-weight:900;font-size:19px;color:var(--celadon);line-height:1.35}
@@ -73,6 +73,7 @@ main{padding:56px 0 96px}
 .dl,.pick{display:inline-block;padding:6px 13px;border:1px solid var(--celadon);border-radius:2px;font:inherit;font-size:13.5px;font-weight:600;color:var(--celadon);background:#fff;text-decoration:none;white-space:nowrap;cursor:pointer}
 .dl:hover,.pick:hover,.pick[aria-expanded="true"]{background:var(--celadon);color:#fff}
 .dl:focus-visible,.pick:focus-visible,.chip:focus-visible{outline:2px solid var(--celadon);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .waiting{display:inline-block;padding:6px 12px;border:1px dashed #c3ccc6;border-radius:2px;font-size:13px;color:#8b968f;white-space:nowrap}
 .item.pending .name{color:#6c7a73}
 
@@ -82,6 +83,76 @@ main{padding:56px 0 96px}
 .chip{display:inline-block;padding:6px 13px;border:1px solid var(--line);border-radius:2px;font-size:14px;color:var(--ink);background:#fff;text-decoration:none;white-space:nowrap}
 a.chip:hover{border-color:var(--celadon);color:var(--celadon)}
 span.chip{color:#a4ada8;border-style:dashed}
+
+
+/* 안내 영역 */
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 8px}
+.toc a{padding:6px 14px;border:1px solid var(--line);border-radius:999px;font-size:14px;color:var(--ink);text-decoration:none;background:#fff}
+.toc a:hover{border-color:var(--celadon);color:var(--celadon)}
+.sec{font-family:var(--serif);font-weight:900;font-size:24px;margin:64px 0 8px;letter-spacing:-0.01em;scroll-margin-top:76px}
+.sec small{font-family:var(--sans);font-weight:700;font-size:13px;color:var(--celadon);letter-spacing:.08em;display:block;margin-bottom:4px}
+.sec-sub{font-size:15px;color:var(--ink-soft);margin-bottom:24px;max-width:720px;word-break:keep-all}
+.note{font-size:13.5px;color:var(--ink-soft);margin-top:12px;word-break:keep-all}
+.note p+p{margin-top:4px}
+
+/* 평가 유형 표 */
+.types{width:100%;border-collapse:collapse;border-top:2px solid var(--ink);font-size:15px}
+.types th,.types td{padding:14px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:keep-all}
+.types thead th{font-size:13px;font-weight:700;color:var(--ink-soft);background:#f3f1ea;padding:10px 12px}
+.types .fam{font-family:var(--serif);font-weight:900;color:var(--celadon);background:#f6f5ef;width:96px}
+.types .tname{font-family:var(--serif);font-weight:600;font-size:16px;width:190px}
+.types .rec{width:150px;color:var(--ink-soft);font-size:14px}
+.types .std{width:140px;font-size:14px}
+.types tr.alt .tname{color:var(--celadon)}
+
+/* 흐름도 */
+.flow{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:32px;align-items:start}
+.flow figure{border:1px solid var(--line);background:#fff;padding:12px;border-radius:2px}
+.flow figure img{display:block;width:100%;height:auto}
+.flow figcaption{font-size:13px;color:var(--ink-soft);margin-top:8px;display:flex;justify-content:space-between;gap:8px}
+.flow figcaption a{color:var(--celadon);font-weight:600}
+.qs{list-style:none;counter-reset:q;border-top:2px solid var(--ink)}
+.qs li{counter-increment:q;padding:14px 0 14px 40px;border-bottom:1px solid var(--line);position:relative;font-size:15px;word-break:keep-all}
+.qs li::before{content:counter(q);position:absolute;left:0;top:14px;width:26px;height:26px;border-radius:50%;background:var(--celadon);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.qs b{font-weight:600}
+.qs span{display:block;font-size:13.5px;color:var(--ink-soft);margin-top:2px}
+.rules{margin-top:20px;padding:16px 18px;background:#f3f1ea;border-left:3px solid var(--celadon);font-size:14px;word-break:keep-all}
+.rules b{display:block;font-family:var(--serif);font-size:15px;margin-bottom:6px}
+.rules li{margin-left:18px}
+.rules li+li{margin-top:4px}
+
+/* 실행 절차 */
+.steps{list-style:none;position:relative}
+.steps::before{content:"";position:absolute;left:21px;top:8px;bottom:8px;width:2px;background:var(--line)}
+.step{position:relative;display:grid;grid-template-columns:44px 1fr;gap:18px;padding:0 0 30px}
+.step:last-child{padding-bottom:0}
+.num{position:relative;z-index:1;width:44px;height:44px;border-radius:50%;background:var(--baekja);border:2px solid var(--celadon);color:var(--celadon);font-family:var(--serif);font-weight:900;font-size:18px;display:flex;align-items:center;justify-content:center}
+.step-body{padding-top:6px}
+.step-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.step-title{font-family:var(--serif);font-weight:900;font-size:19px;line-height:1.4}
+.who{font-size:12.5px;font-weight:600;color:var(--celadon);border:1px solid #c9d8d0;background:#eef4f0;padding:1px 8px;border-radius:2px}
+.step-text{font-size:15px;color:#33403a;margin-top:6px;word-break:keep-all;max-width:720px}
+.step-doc{font-size:13px;color:var(--ink-soft);margin-top:4px}
+.step-forms{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.step-forms a,.step-forms span{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border:1px solid var(--celadon);border-radius:2px;font-size:13.5px;font-weight:600;color:var(--celadon);background:#fff;text-decoration:none}
+.step-forms a:hover{background:var(--celadon);color:#fff}
+.step-forms a::before{content:"↓";font-weight:700}
+.step-forms a.jump::before{content:"↗"}
+.step-forms span{border-style:dashed;border-color:#c3ccc6;color:#8b968f;font-weight:500}
+
+@media (max-width:760px){
+  .flow{grid-template-columns:1fr}
+  .types thead{display:none}
+  .types,.types tbody,.types tr,.types td{display:block;width:100%}
+  .types tr{border-bottom:1px solid var(--line);padding:12px 0}
+  .types td{border:0;padding:3px 4px}
+  .types .fam{display:none}
+  .types .tname{width:auto;font-size:17px}
+  .types .std,.types .rec{width:auto}
+  .types .std::before{content:"평가 기준 · ";color:var(--ink-soft)}
+  .types .rec::before{content:"결과 기록 · "}
+  .types tr.head-row{display:none}
+}
 
 footer{background:var(--buncheong);border-top:1px solid var(--line);padding:36px 0 48px}
 footer p{font-size:13.5px;color:var(--ink-soft);max-width:640px}
@@ -114,14 +185,70 @@ footer p+p{margin-top:8px}
 <header class="page-head">
   <div class="wrap">
     <p class="school">양구초등학교 통합교육 연구학교 · L.I.N.K. 프로그램</p>
-    <h1>대안평가 실행을 위한 서식 모음</h1>
-    <p class="lede">다른 학교에서도 대안평가를 실행할 수 있도록 판단 기준부터 작성 안내까지 아홉 가지 자료를 절차 순서대로 모았습니다.</p>
+    <h1>대안평가 실행 안내와 서식</h1>
+    <p class="lede">다른 학교에서도 대안평가를 실행할 수 있도록 평가 유형과 판단 기준, 실행 절차를 먼저 안내하고 단계마다 쓰는 서식을 함께 두었습니다.</p>
     <p class="tally"><b id="t-ready">0</b>종 공개 · 전체 <b id="t-all">0</b>종</p>
   </div>
 </header>
 <div class="glaze" aria-hidden="true"><i></i><i></i><i></i></div>
 
-<main class="wrap" id="list" aria-live="polite"></main>
+<main class="wrap">
+  <nav class="toc" aria-label="이 페이지의 차례">
+    <a href="#types">정당한 평가</a><a href="#flow">적격성 판단</a><a href="#steps">실행 절차</a><a href="#all">서식 전체</a>
+  </nav>
+
+  <h2 class="sec" id="types"><small>01</small>정당한 평가의 다섯 유형</h2>
+  <p class="sec-sub">학생의 특성과 현행수준을 고려하여 실제 성취를 적절하게 드러낼 수 있도록 운영하는 평가를 정당한 평가라고 합니다. 정당한 평가에는 다섯 유형이 있으며, 이 가운데 정규평가와 평가조정이 있는 정규평가를 제외한 세 유형을 대안평가라고 합니다.</p>
+  <table class="types">
+    <thead><tr><th>구분</th><th>평가 유형</th><th>정의</th><th>평가 기준</th><th>결과 기록</th></tr></thead>
+    <tbody>
+      <tr><td class="fam" rowspan="2">정규평가</td><td class="tname">정규평가</td><td>학년 평가계획의 평가 과제와 평가 기준을 그대로 적용하는 평가</td><td class="std">학년 평가기준</td><td class="rec">잘함·보통·노력요함</td></tr>
+      <tr><td class="tname">평가조정이 있는 정규평가</td><td>평가의 내용과 기준을 바꾸지 않고 평가의 형식(시간, 장소, 문제지의 형태, 응답 방법, 보조기기·보조인력 등)에 편의를 제공하여 실시하는 정규평가</td><td class="std">학년 평가기준</td><td class="rec">잘함·보통·노력요함</td></tr>
+      <tr class="alt"><td class="fam" rowspan="3">대안평가</td><td class="tname">학습조건형 대안평가</td><td>학년 수준의 성취기준과 평가 기준을 유지하되, 학생의 학습 조건(제시 방법, 반응 방법, 과제 구성 등)에 맞게 평가 과제와 방법을 달리하여 실시하는 평가</td><td class="std">학년 평가기준</td><td class="rec">잘함·보통·노력요함</td></tr>
+      <tr class="alt"><td class="tname">세분화된 성취수준에 기초한 대안평가</td><td>학년 수준의 성취기준을 유지하되, 학생의 현행수준에 따라 세분화한 성취수준을 평가 기준으로 하여 실시하는 평가</td><td class="std">세분화된 성취수준</td><td class="rec">도달 여부를 판정하여 수행 수준을 문장으로 기록</td></tr>
+      <tr class="alt"><td class="tname">성취기준 대체 대안평가</td><td>학년 수준의 성취기준을 하위 학년군의 공통교육과정 성취기준 또는 기본교육과정 등의 성취기준으로 대체하여 실시하는 평가</td><td class="std">대체한 성취기준</td><td class="rec">도달 여부를 판정하여 수행 수준을 문장으로 기록</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    <p>※ 같은 과제에 형식의 편의만 제공하면 평가조정, 평가 과제와 방법 자체를 달리하면 학습조건형 대안평가입니다.</p>
+    <p>※ 해당 학년군의 성취기준을 유지하면 세분화된 성취수준에 기초한 대안평가, 다른 성취기준으로 바꾸면 성취기준 대체 대안평가입니다.</p>
+    <p>※ 유형 명칭은 강은영·박경옥(2018)의 대안평가 유형 구분(AA-GLAS, AA-MAS, AA-AAS)을 바탕으로 성취기준의 적용 방식이 드러나도록 본교가 정한 명칭입니다.</p>
+  </div>
+
+  <h2 class="sec" id="flow"><small>02</small>적격성 판단 흐름도</h2>
+  <p class="sec-sub">학생에게 어떤 평가 유형이 맞는지는 개별화교육지원팀이 아래 다섯 물음에 차례로 답하며 정합니다. 물음마다 근거 자료를 적격성·유형 결정서에 기록합니다.</p>
+  <div class="flow">
+    <figure>
+      <a href="forms/적격성판단흐름도.png" target="_blank" rel="noopener"><img src="forms/적격성판단흐름도.png" alt="대안평가 적격성 판단 흐름도. 다섯 물음에 차례로 답하여 정규평가, 평가조정이 있는 정규평가, 학습조건형, 성취기준 대체, 세분화된 성취수준에 기초한 대안평가 가운데 하나로 결정한다." loading="lazy"></a>
+      <figcaption><span>그림을 누르면 크게 볼 수 있습니다.</span><a href="forms/적격성판단흐름도.png" download>내려받기</a></figcaption>
+    </figure>
+    <div>
+      <ol class="qs">
+        <li><b>특수교육대상자로 진단·선정되었나요?</b><span>아니오 → 정규평가</span></li>
+        <li><b>표준화 검사 결과 심각한 인지적 어려움의 수준으로 나타나거나 전반적인 지원을 받고 있으며, 또래에 비해 제한된 적응기술을 보이나요?</b><span>아니오 → 평가조정이 있는 정규평가 (조정으로도 참여가 어려우면 학습조건형 대안평가)</span></li>
+        <li><b>학년 수준의 공통교육과정을 그대로 적용하기 어렵나요?</b><span>아니오 → 학습조건형 대안평가</span></li>
+        <li><b>세분화된 성취수준을 설정하면 공통교육과정의 적용이 가능한가요?</b><span>아니오 → 성취기준 대체 대안평가</span></li>
+        <li><b>장애유형, 교육 배치, 학업성적, 보호자의 요구 같은 부적절한 사유로 대안평가 대상자로 선정하였나요?</b><span>아니오 → 세분화된 성취수준에 기초한 대안평가 · 예 → ①부터 다시 검토</span></li>
+      </ol>
+      <div class="rules">
+        <b>판단할 때 지킬 원칙</b>
+        <ul>
+          <li>유형은 학생 단위로 정하되, 교과의 출발점 진단 결과가 다른 유형을 요구하면 개별화교육지원팀 협의로 교과마다 달리 정할 수 있습니다.</li>
+          <li>장애 유형, 교육 배치(특수학급 수업 교과), 학업성적, 학생·보호자의 요구는 그것만으로 근거가 될 수 없습니다. 근거는 그 교과에서 학생이 무엇을 어떻게 수행하는가입니다.</li>
+          <li>결정은 매 학기 개별화교육계획을 세울 때 같은 절차로 다시 합니다.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sec" id="steps"><small>03</small>실행 절차 8단계</h2>
+  <p class="sec-sub">강은영·박경옥(2018)의 대안평가 실행 과정 7단계를 바탕으로, 유형을 교과마다 정할 수 있도록 학생 정보 수집과 교과별 현행수준 진단을 결정보다 앞에 두고 학업성적관리위원회 심의와 기록·환류 단계를 더했습니다. 이 절차는 매 학기 개별화교육계획을 세울 때마다 새로 밟습니다.</p>
+  <ol class="steps" id="step-list"></ol>
+
+  <h2 class="sec" id="all"><small>04</small>서식 전체</h2>
+  <p class="sec-sub">위 절차에서 쓰는 서식을 한곳에 모았습니다. <b id="t-ready2">0</b>종을 내려받을 수 있습니다.</p>
+  <div id="list" aria-live="polite"></div>
+</main>
 
 <footer>
   <div class="wrap">
@@ -146,7 +273,7 @@ const GROUPS=[
    files:SUBJECTS.map(s=>({label:s, file:`forms/체크리스트_${s}.xlsx`}))},
   {name:"학습자·상황 분석 조사지", desc:"통합학급 교사와 협의하며 학생의 특성과 수업 여건을 기록하는 조사지", file:"forms/학습자상황분석조사지.hwpx"}
  ]},
- {name:"서식", items:[
+ {name:"결정·계획 서식", items:[
   {name:"적격성·유형 결정서", desc:"판단 기록과 유형 결정, 협의와 보호자 동의를 남기는 개별화교육계획 첨부 서식", file:"forms/적격성유형결정서.hwpx"},
   {name:"개별화교육계획 양식", desc:"나이스 개별화교육계획 화면 구성에 맞춘 대안평가 적용 양식", file:"forms/개별화교육계획양식.hwpx"},
   {name:"학생별 평가계획 양식", desc:"성취기준·평가 기준·평가 방법·지원 조건을 학생별로 계획하는 양식 (작성 예시 포함)", file:"forms/학생별평가계획양식.hwpx"}
@@ -160,6 +287,58 @@ const GROUPS=[
 ];
 
 const FOUND=new Set();
+
+/* ===============================================================
+   실행 절차. forms에는 그 단계에서 쓰는 서식의 파일 경로를 적습니다.
+   =============================================================== */
+const STEPS=[
+ {title:"학생 정보 수집", who:"특수교사 · 통합학급 담임교사", doc:"학습자·상황 분석 조사지",
+  text:"특수교사가 통합학급 담임교사와 교과 전담교사를 찾아가 협의하며 교과별 참여 실태를 파악합니다.",
+  forms:[{label:"학습자·상황 분석 조사지", file:"forms/학습자상황분석조사지.hwpx"}]},
+ {title:"교과별 현행수준 진단", who:"교과 담당 교사 (특수교사 포함)", doc:"출발점 진단 체크리스트",
+  text:"성취기준별 수행 정도를 ○·△·×로 진단합니다. 별도 시험 없이 수업 중 관찰로 표시합니다.",
+  forms:[{label:"출발점 진단 체크리스트 (교과 고르기)", jump:"#all"}]},
+ {title:"적격성·유형 결정", who:"개별화교육지원팀 (보호자 포함)", doc:"대안평가 적격성·유형 결정서",
+  text:"흐름도에 따라 판단하고 교과별 유형을 정한 뒤, 보호자에게 안내하고 동의를 받습니다.",
+  forms:[{label:"적격성 판단 흐름도", file:"forms/적격성판단흐름도.png"},{label:"적격성·유형 결정서", file:"forms/적격성유형결정서.hwpx"},{label:"대안평가 안내문 (보호자용)", file:"forms/대안평가안내문.hwpx"}]},
+ {title:"개별화교육계획 수립", who:"교과 담당 교사", doc:"개별화교육계획서",
+  text:"적용하는 성취기준과 학생의 현행수준에 맞게 학기목표를 진술하고, 개별화교육계획의 평가계획(평가방법·평가초점)을 작성합니다.",
+  forms:[{label:"개별화교육계획 양식", file:"forms/개별화교육계획양식.hwpx"},{label:"통합학급 교사용 작성 안내", file:"forms/통합학급교사용작성안내.hwpx"},{label:"평가자료 보기", page:"books.html"}]},
+ {title:"학생별 평가계획 및 평가 도구 개발", who:"교과 담당 교사", doc:"학생별 평가계획서",
+  text:"평가 기준, 평가 장면, 평가 방법, 지원 조건을 정합니다.",
+  forms:[{label:"학생별 평가계획 양식", file:"forms/학생별평가계획양식.hwpx"}]},
+ {title:"학업성적관리위원회 심의 및 승인", who:"학업성적관리위원회 · 학교장", doc:"심의 결과",
+  text:"결정서와 학생별 평가계획을 심의하고 학교장이 결정합니다.",
+  forms:[]},
+ {title:"평가 실행 및 나이스(NEIS) 기록", who:"교과 담당 교사 · 특수교사", doc:"누가기록, 나이스 기록",
+  text:"수업 중 관찰과 결과물로 평가하고, 나이스(NEIS)에 기록하며 개별화교육 평가 결과를 통지합니다.",
+  forms:[]},
+ {title:"평가 결과 환류", who:"개별화교육지원팀", doc:"개별화교육계획 학기 평가",
+  text:"평가 결과를 다음 학기 개별화교육계획에 반영합니다.",
+  forms:[]}
+];
+
+function renderSteps(){
+  document.getElementById("step-list").innerHTML=STEPS.map((st,k)=>{
+    const links=st.forms.map(f=>{
+      if(f.jump) return `<a class="jump" href="${f.jump}" data-open-checklist>${f.label}</a>`;
+      if(f.page) return `<a class="jump" href="${f.page}">${f.label}</a>`;
+      return FOUND.has(f.file)?`<a href="${f.file}" download>${f.label}</a>`:`<span title="준비 중">${f.label}</span>`;
+    }).join("");
+    return `<li class="step"><span class="num" aria-hidden="true">${k+1}</span>
+      <div class="step-body">
+        <div class="step-head"><h3 class="step-title"><span class="sr">${k+1}단계 </span>${st.title}</h3><span class="who">${st.who}</span></div>
+        <p class="step-text">${st.text}</p>
+        <p class="step-doc">산출 문서 · ${st.doc}</p>
+        ${links?`<div class="step-forms">${links}</div>`:""}
+      </div></li>`;
+  }).join("");
+  document.querySelectorAll("[data-open-checklist]").forEach(a=>a.addEventListener("click",()=>{
+    const it=[...document.querySelectorAll("#list .item")].find(x=>x.querySelector(".pick"));
+    if(it&&!it.classList.contains("open")){it.querySelector(".pick").click();}
+  }));
+}
+
 const ext=f=>(f.split(".").pop()||"").toUpperCase();
 const allPaths=()=>GROUPS.flatMap(g=>g.items.flatMap(i=>i.files?i.files.map(x=>x.file):[i.file]));
 const itemReady=i=>i.files?i.files.some(x=>FOUND.has(x.file)):FOUND.has(i.file);
@@ -170,7 +349,7 @@ function render(){
   GROUPS.forEach(g=>{
     const sec=document.createElement("section");
     sec.className="group";
-    sec.innerHTML=`<h2 class="group-name">${g.name}</h2><div class="items"></div>`;
+    sec.innerHTML=`<h3 class="group-name">${g.name}</h3><div class="items"></div>`;
     const $items=sec.querySelector(".items");
     g.items.forEach(i=>{
       const ready=itemReady(i);
@@ -199,6 +378,8 @@ function render(){
   const items=GROUPS.flatMap(g=>g.items);
   document.getElementById("t-all").textContent=items.length;
   document.getElementById("t-ready").textContent=items.filter(itemReady).length;
+  document.getElementById("t-ready2").textContent=items.filter(itemReady).length;
+  renderSteps();
 }
 
 /* forms 폴더에 파일이 올라와 있는지 확인 */
