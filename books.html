@@ -120,6 +120,28 @@ main{padding:40px 0 110px;background:radial-gradient(70% 50% at 50% 0%, var(--sh
 .book[aria-disabled="true"] .cover,.book[aria-disabled="true"] .spine{filter:saturate(.25) brightness(.62)}
 .book[aria-disabled="true"] .book3d{transform:rotateY(22deg)}
 
+/* 안내 */
+.guide{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:0 0 64px}
+.g-card{border:1px solid rgba(255,255,255,.12);border-top:2px solid rgba(var(--glow),.55);background:rgba(255,255,255,.03);padding:20px 22px 22px;border-radius:2px}
+.g-card h2{font-family:var(--serif);font-weight:900;font-size:18px;color:#fff;margin-bottom:10px;line-height:1.4}
+.g-card h2 small{display:block;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.1em;color:rgba(var(--glow),.85);margin-bottom:2px}
+.g-card p,.g-card li{font-size:14.5px;color:#c4d3cb;word-break:keep-all;line-height:1.7}
+.g-card p+p{margin-top:8px}
+.g-card b{color:#e9efeb;font-weight:600}
+.g-card ol,.g-card ul{list-style:none;counter-reset:g}
+.g-card ol li{counter-increment:g;position:relative;padding-left:26px}
+.g-card ol li+li,.g-card ul li+li{margin-top:7px}
+.g-card ol li::before{content:counter(g);position:absolute;left:0;top:3px;width:18px;height:18px;border-radius:50%;border:1px solid rgba(var(--glow),.6);color:rgba(var(--glow),.95);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.g-card ul li{position:relative;padding-left:14px}
+.g-card ul li::before{content:"";position:absolute;left:2px;top:11px;width:5px;height:5px;border-radius:50%;background:rgba(var(--glow),.7)}
+.g-card .tip{margin-top:12px;font-size:13.5px;color:#9fb4aa}
+.g-card a{color:#d6f3e8;text-decoration:none;border-bottom:1px solid rgba(214,243,232,.4)}
+.g-card a:hover{color:#fff;border-bottom-color:#fff}
+.shelf-head{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:10px;margin-bottom:40px}
+.shelf-head h2{font-family:var(--serif);font-weight:900;font-size:22px;color:#fff}
+.shelf-head span{font-size:13.5px;color:#8ea39a}
+@media (max-width:860px){.guide{grid-template-columns:1fr;gap:14px;margin-bottom:48px}}
+
 /* 읽기 창 */
 .reader{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:24px;
   background:rgba(8,14,12,.78);backdrop-filter:blur(3px)}
@@ -164,13 +186,48 @@ footer p+p{margin-top:8px}
   <div class="wrap">
     <p class="school">양구초등학교 통합교육 연구학교 · L.I.N.K. 프로그램</p>
     <h1>장애학생 교수학습 지원을 위한 평가자료</h1>
-    <p class="lede">초등 11개 교과의 평가자료입니다. 책을 누르면 바로 읽을 수 있고, 책 아래에서 내려받을 수 있습니다.</p>
+    <p class="lede">국립특수교육원의 평가 자료를 현장에 맞게 보완하고 미개발 교과로 확장한 초등 11개 교과의 평가지원자료입니다. 책을 누르면 바로 읽을 수 있고, 책 아래에서 내려받을 수 있습니다.</p>
     <p class="tally"><b id="t-ready">0</b>권 공개 · 전체 <b id="t-all">0</b>권</p>
   </div>
 </header>
 
 <main>
   <div class="wrap">
+    <section class="guide" aria-label="평가자료 안내">
+      <div class="g-card">
+        <h2><small>01</small>어떻게 만들었나요</h2>
+        <p>국립특수교육원의 「장애학생 통합교육 교수·학습 지원을 위한 평가 자료」를 바탕으로, 2022 개정 교과서로 수업하는 본교 교사들이 교과별 분과(더배움공동체)를 이루어 재구성하고 확장했습니다.</p>
+        <ul style="margin-top:10px">
+          <li><b>수정·보완 7교과</b> 국어·수학·사회·과학·음악·미술·체육</li>
+          <li><b>신규 개발 4교과</b> 도덕·영어·실과·통합교과</li>
+          <li>동료 검토, 상호 검토, 현장성 검토, 최종 검수를 거쳐 완성</li>
+        </ul>
+      </div>
+      <div class="g-card">
+        <h2><small>02</small>무엇이 들어 있나요</h2>
+        <p>성취기준마다 네 부분으로 되어 있습니다.</p>
+        <ol style="margin-top:8px">
+          <li>성취기준과 성취기준 해설</li>
+          <li>성취기준별 성취수준(A·B·C)</li>
+          <li><b>세분화된 성취수준 풀(pool)</b> — 성취기준을 의미 단위로 나누고 수준과 수행 방식이 다른 문장을 모아 둔 것</li>
+          <li>교수·학습을 위한 참고자료</li>
+        </ol>
+        <p class="tip">교과마다 첫 장에 개발 방향과 개발 과정을 실었습니다.</p>
+      </div>
+      <div class="g-card">
+        <h2><small>03</small>이렇게 활용하세요</h2>
+        <p>풀(pool)에서 학생의 수행에 맞는 문장을 골라 연결하면 그 학생의 성취수준이 됩니다. 같은 문장을 대안평가의 단계마다 이어서 씁니다.</p>
+        <ol style="margin-top:8px">
+          <li>출발점 진단 체크리스트로 현행수준 진단</li>
+          <li>개별화교육계획의 학기목표 진술</li>
+          <li>학생별 평가계획의 평가 기준 작성</li>
+          <li>학기말 수행 수준 기록</li>
+        </ol>
+        <p class="tip">맞는 문장이 없으면 교사가 문장을 더해 쓸 수 있습니다. 절차와 서식은 <a href="forms.html">대안평가 서식</a>에서 볼 수 있습니다.</p>
+      </div>
+    </section>
+
+    <div class="shelf-head"><h2>11개 교과 평가자료</h2><span>책을 누르면 바로 읽을 수 있습니다</span></div>
     <div class="shelf" id="shelf"></div>
   </div>
 </main>
